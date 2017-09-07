@@ -36,6 +36,22 @@
         <script src="js/html5shiv.js"></script>
         <script src="js/respond.min.js"></script>
     <![endif]-->
+   <style type="text/css">
+    .wrap-vid{  
+    white-space: nowrap;
+            width:650px;
+            height:550px;
+            overflow:hidden;
+            margin:0 auto;
+        }
+        .wrap-vid  p{
+        opacity:0.5;
+            position:relative;
+            left:650px;
+            margin:0;
+            padding:0;
+        }
+   </style>
 </head>
 
 <body>
@@ -230,8 +246,10 @@
 		<div class="container">
 			<div class="row">
 				<div id="main-content" class="col-md-8">
-					<div class="wrap-vid" id="a1"></div>
-
+					<div class="wrap-vid" id="a1">
+					
+					</div>
+<br>
 					<div class="share">
 						<ul class="list-inline center">
 							<li><a href="#" class="btn btn-facebook"><i
@@ -299,7 +317,7 @@
 							<div class="row">
 								<div class="col-md-12">
 									<div class="form-group">
-										<textarea name="message" id="message" class="form-control"
+										<textarea name="messagesend" id="messagesendd" class="form-control"
 											rows="4" cols="25" required="required" placeholder="Message"></textarea>
 									</div>
 									<button type="submit" class="btn btn-4 btn-block"
@@ -415,7 +433,7 @@
 
 									<div class="panel panel-default">
 
-										<textarea
+				<textarea id="message"
 											style="width: 349px; height: 50px; resize: none; border: 0; overflow-y: hidden;"></textarea>
 
 									</div>
@@ -458,7 +476,7 @@
 									</div>
 									<div>
 									<div style="float: right">
-										<button id="send" type="button" class="btn btn btn-primary btn-lg">发送</button>
+										<button id="sendForFULI" type="button" class="btn btn btn-primary btn-lg">发送</button>
 									</div>
 									<div style="float: right;margin-right: 30px">
 									  <img id="addImage"
@@ -779,6 +797,42 @@
 	<!-- websocket连接js -->
 	<script src="/js/websocket.js"></script>
 	<script type="text/javascript">	
+	//随机获取颜色值
+    function getReandomColor(){
+        return '#'+(function(h){
+        return new Array(7-h.length).join("0")+h
+        })((Math.random()*0x1000000<<0).toString(16))
+    }
+
+//生成随机数据。n表示位数
+    var jschars = ['0','1','2','3','4','5','6','7','8','9'];
+    function generateMixed(n) {
+        var res = "";
+        for(var i = 0; i < n ; i ++) {
+            var id = Math.ceil(Math.random()*9);
+            res += jschars[id];
+        }
+        return res;
+    }
+
+    $("#send").click(function(){   
+        var msgtxt=$("#message").val();
+        var colortxt = getReandomColor();
+        var topPos = generateMixed(3);
+        if (topPos > 300)
+        {
+            topPos = 30;
+        }
+        var newtxt = '<p style="top:'+topPos+'px; color:'+colortxt+'">'+$("#message").val()+'</p>';
+        $(".wrap-vid").prepend(newtxt);
+
+        var addTextW = $(".wrap-vid").find("p").width();
+        $(".wrap-vid p").animate({left: '-'+addTextW+"px"}, 25000,function(){
+            $(this).hide();
+        });
+        $("#a1").css({"width":'650',"height":'550'});
+    });
+    
 	   var websocket=null;
 	   connectWebsocket(websocket);
 	//监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
