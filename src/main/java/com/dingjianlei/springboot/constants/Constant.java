@@ -18,4 +18,5 @@ public static final String ERROR_EMAIL_EXISIS="该邮箱已经存在";
 public static final String ERROR_USERNAME_EXISIS="该用户名已经存在";
 /**程序发生异常页面显示**/
 public static final String ERROR_EXCEPTION="程序发生异常";
+public static String ONLINECOUNT="1";
 }

@@ -32,7 +32,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				
 			 <script>
 			 
-			 function checkUserNameInfo(username){		
+			 function checkUserNameInfo(){	
+					var username=$("#username").val();
 			 if(username=''){
 				 alert("用户名不能为空！");
 			 }
@@ -47,10 +48,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					});
 				return;
 			 } 
-			function  checkUserEmailInfo(email){	
+			function  checkUserEmailInfo(){	
+				var email=$("#email").val();
 				if(email==''){
 					alert("邮箱不能为空");
 				}
+				   var reg = /\w+[@]{1}\w+[.]\w+/;
+				   if(reg.test(email)){
+				 
+				   }else{
+				    alert("请输入正确的email地址");
+				   }
 			    $.ajax({
 					type : "POST",
 					url : "checkInfo/0?email="+email,	
@@ -66,36 +74,38 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				var checkcode=$("#checkcode").val();
 				var email=$("#email").val();;
 				var password=$("#password").val();
-				if(username==""){
+				if(password==""){
 					alert("密码不能为空");
+					return;
+				}
+				if(username==""){
+					alert("用户名不能为空");
 					return;
 				}
 				if(email==""){
 					alert("邮箱不能为空");
 					return;
+				}if(checkcode==''){
+					alert("验证码不能为空");
+					return;
 				}
 			}
-						$(document).ready(function() {		
-							myFunction();
-						
-							 $(":input[name='email']").blur(function(){
-								   var email = $(this).val();
-								   var reg = /\w+[@]{1}\w+[.]\w+/;
-								   if(reg.test(email)){
-								 
-								   }else{
-								    alert("请输入正确的email地址");
-								   }
-								  });
-							var username=$("username").val();
-							 $("#username").blur(function(){
-									checkUserNameInfo(username);
-							 });
-							
-							 $("#email").blur(function(){
-									checkUserEmailInfo(username);
-							 });							
-							
+			//
+			function checkAndSendEmail(){
+				
+				
+				return;
+				var checkcode=$("#checkcode").val();
+				   $.ajax({
+						type : "POST",
+						url : "checkInfo/0?email="+email,	
+						dataType : "json",
+						success : function(data) {
+							console.log(data);
+						}
+					});
+			}
+						$(document).ready(function() {																																			
 						$('.popup-with-zoom-anim').magnificPopup({
 							type: 'inline',
 							fixedContentPos: false,
@@ -115,9 +125,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<script src="js/jquery.magnific-popup.js" type="text/javascript"></script>
 			<!--pop-up-box-->
 			<form>
-<input  id="username" class="username"  type="text" class="text" value="" placeholder="用户名" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '用户名';}" >
-<input id="email" type="text"   name ="email" class="email" value="" placeholder="邮箱@" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '邮箱@';}" >
-<input id="checkcode"  class="checkcode" type="text" value="" placeholder="邮箱验证码" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '邮箱验证码';}">
+<input  id="username" class="username"  type="text" class="text" value="" placeholder="用户名" onfocus="this.value = '';" onblur="checkUserNameInfo()" >
+<input id="email" type="text"   name ="email" class="email" value="" placeholder="邮箱@" onfocus="this.value = '';" onblur="checkUserEmailInfo()" >
+<input id="checkcode"  class="checkcode" type="text" value="" placeholder="邮箱验证码" onfocus="this.value = '';" onblur="checkAndSendEmail()">
 <input id="password" type="password" value="" placeholder="密码" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '密码';}">
 <span id="repeatCode"  style="font-family: Microsoft YaHei UI; font-size: 18px; color: green"> </span>
 	<div class="submit"><input type="submit" onclick="myFunction()" value="注册" ></div>

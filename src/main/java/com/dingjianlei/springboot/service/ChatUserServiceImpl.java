@@ -33,6 +33,48 @@ public class ChatUserServiceImpl implements ChatUserService {
 	@Autowired
 	private ChatUserRepository chatUserRepository;
 
+	@Override
+	public boolean login(String username, String password) {
+		// TODO Auto-generated method stub
+		boolean res = false;
+		try {
+			ChatUser chatUser = chatUserRepository.findByUsername(username);
+			if (chatUser == null) {
+				return res;
+			} else {
+				if (StringUtils.equals(password, chatUser.getPassword())) {
+					res = true;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			res=false;
+		}
+
+		return res;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.dingjianlei.springboot.service.ChatUserService#insertChatUser(com.
+	 * dingjianlei.springboot.entity.ChatUser)
+	 */
+	@Override
+	public int insertChatUser(ChatUser chatUser) {
+		// TODO Auto-generated method stub
+		try {
+
+			chatUserRepository.save(chatUser);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return 0;
+		}
+
+		return 1;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -46,7 +88,7 @@ public class ChatUserServiceImpl implements ChatUserService {
 		ResultObject resultObject = new ResultObject();
 		try {
 			ChatUser chatUser = null;
-			//判断邮箱是否存在
+			// 判断邮箱是否存在
 			if (StringUtils.equals(Constant.EMAIL_TYPE, type)) {
 				if (StringUtils.isNotBlank(email)) {
 					chatUser = chatUserRepository.findByEmail(email);
@@ -62,7 +104,7 @@ public class ChatUserServiceImpl implements ChatUserService {
 				}
 
 			}
-			//判断用户名是否存在
+			// 判断用户名是否存在
 			else if (StringUtils.equals(Constant.USER_TYPE, type)) {
 				if (StringUtils.isNotBlank(username)) {
 					chatUser = chatUserRepository.findByUsername(username);
@@ -83,7 +125,7 @@ public class ChatUserServiceImpl implements ChatUserService {
 			resultObject.setSuccess(false);
 			resultObject.setMessage(Constant.ERROR_EXCEPTION);
 		}
-		
+
 		return resultObject;
 	}
 
