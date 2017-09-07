@@ -9,9 +9,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dingjianlei.springboot.constants.Constant;
+import com.dingjianlei.springboot.dto.ResultObject;
 import com.dingjianlei.springboot.service.ChatUserService;
+
 /**
  * 注册controller
+ * 
  * @author Zlyj
  *
  */
@@ -19,25 +22,37 @@ import com.dingjianlei.springboot.service.ChatUserService;
 public class LoginController {
 	@Autowired
 	private ChatUserService chatUserService;
+
 	@RequestMapping("login")
-	public String getLogin(String username,String email) {
-		
+	public String getLogin(String username, String password) {
+        
 		return "login";
 	}
+
 	@RequestMapping("register")
-	public String getRegister(@RequestParam String username,@RequestParam  String email,@RequestParam  String password) {
-		
+	public String getRegister(@RequestParam String username, @RequestParam String email,
+			@RequestParam String password) {
+
 		return "register";
 	}
+
 	/**
 	 * @param userName
-	 * @param type  1 用户名校验 0 邮箱校验
+	 * @param type
+	 *            1 用户名校验 0 邮箱校验
 	 * @return
 	 */
 	@RequestMapping("/checkInfo/{type}")
 	@ResponseBody
-	public String getCheckInfo(String username,@PathVariable String type,String email) {
-		chatUserService.checkChatUser(type,username,email);
-		return "login";
+	public ResultObject getCheckInfo(String username, @PathVariable String type, String email) {
+		ResultObject resultObject = null;
+		try {
+			// false表示不存在这个邮箱或者用户名，表示可以使用
+			resultObject = chatUserService.checkChatUser(type, username, email);
+		} catch (Exception e) {
+			// TODO: handle exception
+               e.printStackTrace();
+		}
+		return resultObject;
 	}
 }
