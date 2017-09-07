@@ -26,9 +26,9 @@ http://www.ckplayer.com/  有需要的小伙伴可以去官网看看api，
 
 如果喜欢该源码，请随意打赏 谢谢 
 
-![image](https://github.com/gongtengxinyi/leChatTv/blob/master/src/test/java/com/example/demo/a.png)
-![image](https://github.com/gongtengxinyi/leChatTv/blob/master/src/test/java/com/example/demo/b.png)
-![image](https://github.com/gongtengxinyi/leChatTv/blob/master/src/test/java/com/example/demo/c.png)
+![image](https://github.com/gongtengxinyi/leliaotv/blob/master/src/test/java/com/example/demo/a.png)
+![image](https://github.com/gongtengxinyi/leliaotv/blob/master/src/test/java/com/example/demo/b.png)
+![image](https://github.com/gongtengxinyi/leliaotv/blob/master/src/test/java/com/example/demo/c.png)
 
 
 
