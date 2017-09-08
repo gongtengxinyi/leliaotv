@@ -21,7 +21,7 @@ public class RoomController {
 		map.put("room", room);
 		map.put("chatUserId", chatUserId);
 		map.put("roomId", roomId);
-		return "room";
+		return "single";
 	}
 
 }

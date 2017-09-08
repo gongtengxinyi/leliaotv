@@ -8,6 +8,7 @@ package com.dingjianlei.springboot.constants;
 public enum EnumMessageMode {
 	CHAT_MESSAGE("聊天消息"),
 	ADMIN_MESSAGE("管理员消息"),
+	SYSTEM_MESSAGE("系统消息"),
 	;
 
 	private String text;

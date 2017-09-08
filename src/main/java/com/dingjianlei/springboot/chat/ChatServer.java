@@ -104,6 +104,7 @@ public class ChatServer {
 			return;
 		addChatUserToHashMap(roomId, chatUserId);
 		try {
+			//发一个应答标记，表示已经成功登陆，没有构造
 			sendMessage("SUCCESS");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -245,6 +246,10 @@ public class ChatServer {
 	public void onMessage(String message, Session session) {
 		if (StringUtils.isBlank(message)) // 收到的是空串
 			return;
+		if(StringUtils.equals(Constant.SUCCESS_RESPONSE, message)) {
+			closeSession(session);
+			return;
+		}
 		Gson gson = null;
 		try {// 解析json串
 			gson = new Gson();
