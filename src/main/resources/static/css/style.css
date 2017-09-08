@@ -135,7 +135,7 @@ body.sub-page .logo {margin: 110px 0 80px;background: url(../images/bg.jpg) fixe
 #page-content{}
 .index-page {}
 
-.single-page {}
+.single-page {width: 100%;}
 
 .archive-page {}
 .archive-page article .zoom-container{max-width: 250px;display: inline-block;float: left;margin-right: 5px;}

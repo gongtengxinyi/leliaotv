@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="description" content="">
 <meta name="author" content="">
@@ -11,8 +10,6 @@
 
 <!-- Bootstrap Core CSS -->
 <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
-<script src="/js/video.js"></script>
-<script src="/js/videojs-live.js"></script>
 <!-- Custom CSS -->
 <link rel="stylesheet" href="/css/style.css">
 
@@ -23,7 +20,10 @@
 <!-- Custom Fonts -->
 <link rel="stylesheet"
 	href="/font-awesome-4.4.0/css/font-awesome.min.css" type="text/css">
-
+<!-- Custom styles for our template -->
+<!-- 	<link rel="stylesheet" href="/assets/css/bootstrap-theme.css" media="screen" > -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+	<link rel="stylesheet" href="/assets/js/highlight/styles/monokai.css">
 <!-- jQuery and Modernizr-->
 <script src="/js/jquery.min.js"></script>
 
@@ -36,6 +36,41 @@
         <script src="js/html5shiv.js"></script>
         <script src="js/respond.min.js"></script>
     <![endif]-->
+<script  src="/js/jquery.danmu.js"></script>
+    <link rel="stylesheet"
+	href="/video-js//video-js.css" type="text/css">
+    <script src="/video-js/video.js"></script>
+<script src="/video-js/videojs-contrib-hls.min.js"></script>
+<style type="text/css">
+	body {
+		  font-family: "Microsoft YaHei" ! important;
+		  font-color:#222;
+	}
+		pre {
+			line-height: 2em;
+		  font-family: "Microsoft YaHei" ! important;
+	}
+	h4 {
+		line-height: 2em;
+	}
+	#danmuarea {
+		position: relative;
+		background: #222;
+		width:800px;
+		height: 445px;
+		margin-left: auto;
+		margin-right: auto;
+
+
+	}
+
+ 
+
+	.ctr {
+		font-size: 1em;
+		  line-height: 2em;
+	}
+</style>
 </head>
 
 <body>
@@ -129,109 +164,22 @@
 				</div>
 			</div>
 		</nav>
-
-		<div class="header-slide">
-			<div id="owl-demo" class="owl-carousel">
-				<div class="item">
-					<div class="zoom-container">
-						<div class="zoom-caption">
-							<span>视频标签</span> <a href="single.html"> <i
-								class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-							</a>
-							<p>视频名字</p>
-						</div>
-						<img src="images/2.jpg" />
-					</div>
-				</div>
-				<div class="item">
-					<div class="zoom-container">
-						<div class="zoom-caption">
-							<span>视频标签</span> <a href="single.html"> <i
-								class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-							</a>
-							<p>视频名字</p>
-						</div>
-						<img src="images/3.jpg" />
-					</div>
-				</div>
-				<div class="item">
-					<div class="zoom-container">
-						<div class="zoom-caption">
-							<span>视频标签</span> <a href="single.html"> <i
-								class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-							</a>
-							<p>视频名字</p>
-						</div>
-						<img src="images/4.jpg" />
-					</div>
-				</div>
-				<div class="item">
-					<div class="zoom-container">
-						<div class="zoom-caption">
-							<span>视频标签</span> <a href="single.html"> <i
-								class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-							</a>
-							<p>视频名字</p>
-						</div>
-						<img src="images/5.jpg" />
-					</div>
-				</div>
-				<div class="item">
-					<div class="zoom-container">
-						<div class="zoom-caption">
-							<span>Video's Tag</span> <a href="single.html"> <i
-								class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-							</a>
-							<p>Video's Name</p>
-						</div>
-						<img src="images/6.jpg" />
-					</div>
-				</div>
-				<div class="item">
-					<div class="zoom-container">
-						<div class="zoom-caption">
-							<span>Video's Tag</span> <a href="single.html"> <i
-								class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-							</a>
-							<p>Video's Name</p>
-						</div>
-						<img src="images/7.jpg" />
-					</div>
-				</div>
-				<div class="item">
-					<div class="zoom-container">
-						<div class="zoom-caption">
-							<span>Video's Tag</span> <a href="single.html"> <i
-								class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-							</a>
-							<p>Video's Name</p>
-						</div>
-						<img src="images/8.jpg" />
-					</div>
-				</div>
-				<div class="item">
-					<div class="zoom-container">
-						<div class="zoom-caption">
-							<span>Video's Tag</span> <a href="single.html"> <i
-								class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-							</a>
-							<p>Video's Name</p>
-						</div>
-						<img src="images/9.jpg" />
-					</div>
-				</div>
-			</div>
-		</div>
 	</header>
 	<!-- Header -->
 
 	<!-- /////////////////////////////////////////Content -->
 	<div id="page-content" class="single-page">
-		<div class="container">
+		<div style="margin-top: 30px;margin-left: 30px">
 			<div class="row">
-				<div id="main-content" class="col-md-8">
-					<div class="wrap-vid" id="a1"></div>
+				<div id="" class="col-lg-8">		
+				<div id="danmu">	</div>		
+<video id="example-video"  class="video-js vjs-default-skin "  width="100%" height="100%"  controls>
+  <source
+     src="http://192.168.1.33/hls/ding.m3u8"
+     type="application/x-mpegURL">
+</video>
 
+<br>
 					<div class="share">
 						<ul class="list-inline center">
 							<li><a href="#" class="btn btn-facebook"><i
@@ -390,10 +338,10 @@
 						</div>
 					</div>
 				</div>
-				<div id="sidebar" class="col-md-4">
+				<div id="" class="col-lg-4">
 					<!---- Start Widget ---->
 					<div class="panel panel-default"
-						style="width: 350px; height: 540px; margin-bottom: 120px">
+						style="width: 350px; height: 540px; ">
 
 						<div class="content">
 							<ul id="myTab" class="nav nav-tabs">
@@ -415,7 +363,7 @@
 
 									<div class="panel panel-default">
 
-										<textarea
+										<textarea  id="sendMessage"
 											style="width: 349px; height: 50px; resize: none; border: 0; overflow-y: hidden;"></textarea>
 
 									</div>
@@ -458,7 +406,7 @@
 									</div>
 									<div>
 									<div style="float: right">
-										<button id="send" type="button" class="btn btn btn-primary btn-lg">发送</button>
+										<button id="sendfuli" type="button" class="btn btn btn-primary btn-lg">发送</button>
 									</div>
 									<div style="float: right;margin-right: 30px">
 									  <img id="addImage"
@@ -478,169 +426,11 @@
 						</div>
 
 					</div>
-
-
-
-
-
-					<!---- Start Widget ---->
-					<div class="widget wid-post">
-						<div class="heading">
-							<h4>
-								<i class="fa fa-globe"></i> Category
-							</h4>
-						</div>
-						<div class="content">
-							<div class="post wrap-vid">
-								<div class="zoom-container">
-									<div class="zoom-caption">
-										<span>Video's Tag</span> <a href="single.html"> <i
-											class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-										</a>
-										<p>Video's Name</p>
-									</div>
-									<img src="images/7.jpg" />
-								</div>
-								<div class="wrapper">
-									<h5 class="vid-name">
-										<a href="#">Video's Name</a>
-									</h5>
-									<div class="info">
-										<h6>
-											By <a href="#">Kelvin</a>
-										</h6>
-										<span><i class="fa fa-calendar"></i>25/3/2015</span> <span><i
-											class="fa fa-heart"></i>1,200</span>
-									</div>
-								</div>
-							</div>
-							<div class="post wrap-vid">
-								<div class="zoom-container">
-									<div class="zoom-caption">
-										<span>Video's Tag</span> <a href="single.html"> <i
-											class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-										</a>
-										<p>Video's Name</p>
-									</div>
-									<img src="images/8.jpg" />
-								</div>
-								<div class="wrapper">
-									<h5 class="vid-name">
-										<a href="#">Video's Name</a>
-									</h5>
-									<div class="info">
-										<h6>
-											By <a href="#">Kelvin</a>
-										</h6>
-										<span><i class="fa fa-calendar"></i>25/3/2015</span> <span><i
-											class="fa fa-heart"></i>1,200</span>
-									</div>
-								</div>
-							</div>
-							<div class="post wrap-vid">
-								<div class="zoom-container">
-									<div class="zoom-caption">
-										<span>Video's Tag</span> <a href="single.html"> <i
-											class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-										</a>
-										<p>Video's Name</p>
-									</div>
-									<img src="images/9.jpg" />
-								</div>
-								<div class="wrapper">
-									<h5 class="vid-name">
-										<a href="#">Video's Name</a>
-									</h5>
-									<div class="info">
-										<h6>
-											By <a href="#">Kelvin</a>
-										</h6>
-										<span><i class="fa fa-calendar"></i>25/3/2015</span> <span><i
-											class="fa fa-heart"></i>1,200</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="line"></div>
-					</div>
-					<!---- Start Widget ---->
-					<div class="widget wid-news">
-						<div class="heading">
-							<h4>
-								<i class="fa fa-clock-o"></i> Top News
-							</h4>
-						</div>
-						<div class="content">
-							<div class="wrap-vid">
-								<div class="zoom-container">
-									<div class="zoom-caption">
-										<span>Video's Tag</span> <a href="single.html"> <i
-											class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-										</a>
-										<p>Video's Name</p>
-									</div>
-									<img src="images/3.jpg" />
-								</div>
-								<h3 class="vid-name">
-									<a href="#">Video's Name</a>
-								</h3>
-								<div class="info">
-									<h5>
-										By <a href="#">Kelvin</a>
-									</h5>
-									<span><i class="fa fa-calendar"></i>25/3/2015</span> <span><i
-										class="fa fa-heart"></i>1,200</span>
-								</div>
-							</div>
-							<div class="wrap-vid">
-								<div class="zoom-container">
-									<div class="zoom-caption">
-										<span>Video's Tag</span> <a href="single.html"> <i
-											class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-										</a>
-										<p>Video's Name</p>
-									</div>
-									<img src="images/4.jpg" />
-								</div>
-								<h3 class="vid-name">
-									<a href="#">Video's Name</a>
-								</h3>
-								<div class="info">
-									<h5>
-										By <a href="#">Kelvin</a>
-									</h5>
-									<span><i class="fa fa-calendar"></i>25/3/2015</span> <span><i
-										class="fa fa-heart"></i>1,200</span>
-								</div>
-							</div>
-							<div class="wrap-vid">
-								<div class="zoom-container">
-									<div class="zoom-caption">
-										<span>Video's Tag</span> <a href="single.html"> <i
-											class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-										</a>
-										<p>Video's Name</p>
-									</div>
-									<img src="images/5.jpg" />
-								</div>
-								<h3 class="vid-name">
-									<a href="#">Video's Name</a>
-								</h3>
-								<div class="info">
-									<h5>
-										By <a href="#">Kelvin</a>
-									</h5>
-									<span><i class="fa fa-calendar"></i>25/3/2015</span> <span><i
-										class="fa fa-heart"></i>1,200</span>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+				
 			</div>
 		</div>
 	</div>
-
+</div>
 	<footer>
 		<div class="top-footer">
 			<ul class="footer-social list-inline">
@@ -772,8 +562,6 @@
 
 	<!-- JS -->
 	<script src="/owl-carousel/owl.carousel.js"></script>
-	<script type="text/javascript" src="/ckplayer/ckplayer.js"
-		charset="utf-8"></script>
 	<!-- 具体处理消息的js -->
 	<script src="/js/chat.js"></script>
 	<!-- websocket连接js -->
@@ -787,41 +575,31 @@
 			websocket.onclose = function() {
 			}
 		}
-		showPlayer('http://192.168.1.33/hls/ding.m3u8', 'a1')
-		function showPlayer(src, id) {
-			//player
-			var flashvars = {
-				f : '/ckplayer/m3u8.swf',
-				a : src,
-				c : 1,
-				s : 4,
-				p : 1,
-				lv : 1
-			//注意，如果是直播，需设置lv:1
-			};
-			var params = {
-				bgcolor : '#FFF',
-				allowFullScreen : true,
-				allowScriptAccess : 'always',
-				wmode : 'transparent'
-			};
-			var video = [ src ];
-			CKobject.embed('/ckplayer/ckplayer.swf', id, 'ck-video', '650',
-					'550', false, flashvars, video, params);
-
-		}
+	   var player = videojs('example-video', { fluid: true }, function () {
+           this.play(); // if you don't trust autoplay for some reason  
+})
+$("#danmu").danmu({
+left: 0,    //区域的起始位置x坐标
+top: 0 ,  //区域的起始位置y坐标
+height: 360, //区域的高度 
+width: 640, //区域的宽度 
+zindex :100, //div的css样式zindex
+speed:20000, //弹幕速度，飞过区域的毫秒数 
+sumtime:900 , //弹幕运行总时间
+danmuss:{}, //danmuss对象，运行时的弹幕内容 
+default_font_color:"#FFFFFF", //弹幕默认字体颜色 
+font_size_small:16, //小号弹幕的字体大小,注意此属性值只能是整数
+font_size_big:24, //大号弹幕的字体大小 
+opacity:"0.9", //弹幕默认透明度 
+top_botton_danmu_time:6000 //顶端底端弹幕持续时间 
+} );
+var a_danmu={ "text":"2333333" , "color":"green" ,"size":"1","position":"0","time":60}; 
+$('#danmu').danmu("add_danmu",a_danmu);
+$('#danmu').danmu("add_danmu",a_danmu);
+$('#danmu').danmu("add_danmu",a_danmu);
+$('#danmu').danmu("add_danmu",a_danmu);
 	</script>
-	<script>
-		$(document).ready(function() {
-			$("#owl-demo").owlCarousel({
-				autoPlay : 3000,
-				items : 5,
-				itemsDesktop : [ 1199, 4 ],
-				itemsDesktopSmall : [ 979, 4 ]
-			});
 
-		});
-	</script>
 
 </body>
 </html>
