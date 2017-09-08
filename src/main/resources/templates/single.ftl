@@ -577,27 +577,28 @@
 		}
 	   var player = videojs('example-video', { fluid: true }, function () {
            this.play(); // if you don't trust autoplay for some reason  
-})
+        })
 $("#danmu").danmu({
 left: 0,    //区域的起始位置x坐标
 top: 0 ,  //区域的起始位置y坐标
-height: 360, //区域的高度 
-width: 640, //区域的宽度 
+height: 650, //区域的高度 
+width: 650, //区域的宽度 
 zindex :100, //div的css样式zindex
 speed:20000, //弹幕速度，飞过区域的毫秒数 
 sumtime:900 , //弹幕运行总时间
 danmuss:{}, //danmuss对象，运行时的弹幕内容 
-default_font_color:"#FFFFFF", //弹幕默认字体颜色 
+default_font_color:"green", //弹幕默认字体颜色 
 font_size_small:16, //小号弹幕的字体大小,注意此属性值只能是整数
 font_size_big:24, //大号弹幕的字体大小 
 opacity:"0.9", //弹幕默认透明度 
 top_botton_danmu_time:6000 //顶端底端弹幕持续时间 
 } );
-var a_danmu={ "text":"2333333" , "color":"green" ,"size":"1","position":"0","time":60}; 
+var a_danmu={ "text":"2333333" , "color":"green" ,"size":"1","position":"0","time":10}; 
 $('#danmu').danmu("add_danmu",a_danmu);
 $('#danmu').danmu("add_danmu",a_danmu);
 $('#danmu').danmu("add_danmu",a_danmu);
 $('#danmu').danmu("add_danmu",a_danmu);
+$('#danmu').danmu('danmu_start'); 
 	</script>
 
 
