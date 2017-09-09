@@ -6,7 +6,8 @@ package com.dingjianlei.springboot.dto;
 public class ChatMessage {
 
 	private String id;
-	private String level;
+	private String level;//等级
+	private String chatName;//说话者姓名
 	private String timeTag;// 显示人性化的时间标记，如：5分钟前，1小时前等等
 	private String roomId;// 房间id
 	private String messageMode;// 信息模式： 聊天 语音
@@ -18,6 +19,14 @@ public class ChatMessage {
 	private String binaryAddress;// 二进制文件的存储位置。上传之后，将文件存储在指定的位置，然后将binary清空
 	private String imageBase64;// 图片的base64字符串
     
+	public String getChatName() {
+		return chatName;
+	}
+
+	public void setChatName(String chatName) {
+		this.chatName = chatName;
+	}
+
 	public String getLevel() {
 		return level;
 	}

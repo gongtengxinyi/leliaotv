@@ -8,6 +8,7 @@ import javax.persistence.Id;
 public class ChatUser {
 	@Id
     private String id;
+	/**姓名**/
     @Column(nullable = false)
     private String username;
     /**密码**/

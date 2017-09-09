@@ -10,4 +10,8 @@ public ResultObject checkChatUser(String type,String username,String email);
 public int insertChatUser(ChatUser chatUser);
 /**根据用户名和密码登录**/
 public boolean login(String username, String password);
+/**根据主键id判断用户是否存在**/
+public boolean existsById(String chatUserId);
+/**通过主键寻找chatUser对象**/
+public ChatUser findChatUserById(String chatUserId);
 }

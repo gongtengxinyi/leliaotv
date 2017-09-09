@@ -18,8 +18,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;
 
+import com.dingjianlei.springboot.config.SpringContextHolder;
 import com.dingjianlei.springboot.constants.Constant;
 import com.dingjianlei.springboot.dto.ChatMessage;
+import com.dingjianlei.springboot.entity.ChatUser;
+import com.dingjianlei.springboot.service.ChatUserService;
+import com.dingjianlei.springboot.service.ChatUserServiceImpl;
 import com.google.gson.Gson;
 
 /***
@@ -43,9 +47,10 @@ public class ChatServer {
 	private String token;
 	/** 房间号 **/
 	private String roomId;
-	/** chatUser **/
+	/** chatUser 主键Id**/
 	private String chatUserId;
-
+	/**chatUserd对象**/
+     private ChatUser chatUser;
 	/**
 	 * concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。若要实现服务端与单一客户端通信的话，
 	 * 可以使用Map来存放，其中Key可以为用户标识·1
@@ -102,16 +107,29 @@ public class ChatServer {
 		this.session = session;
 		if (!parseQueryString(session)) // 如果未能取得用户id和type，退出
 			return;
+		// 验证账号，防止伪造
+		this.chatUser = loginChatServer(chatUserId);
+		if (this.chatUser == null) {
+             closeSession(session);
+             return;
+		}
 		addChatUserToHashMap(roomId, chatUserId);
 		try {
-			//发一个应答标记，表示已经成功登陆，没有构造
+			// 发一个应答标记，表示已经成功登陆，没有构造
 			sendMessage("SUCCESS");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Constant.ONLINECOUNT=onlineCount.toString();
+		Constant.ONLINECOUNT = onlineCount.toString();
 	}
+
+	// 通过用户id登录chatServer服务器，如果null则证明伪造身份 closeSession
+	private ChatUser loginChatServer(String chatUserId) {
+		ChatUserService chatUserService = SpringContextHolder.getBean(ChatUserServiceImpl.class);
+		return chatUserService.findChatUserById(chatUserId);
+	}
+
 	/**
 	 * 一个房间对应的一个chatuser列表 发消息时候进行遍历操作
 	 * 
@@ -211,7 +229,6 @@ public class ChatServer {
 	 */
 	private void closeSession(Session session) {
 		try {
-			System.out.println("有一连接关闭发生错误");
 			session.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -228,7 +245,7 @@ public class ChatServer {
 			removeChatUserFromRoomHashMap(this.roomId, this.chatUserId);
 			subOnlineCount(); // 在线数减1
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 		}
 	}
 
@@ -246,8 +263,7 @@ public class ChatServer {
 	public void onMessage(String message, Session session) {
 		if (StringUtils.isBlank(message)) // 收到的是空串
 			return;
-		if(StringUtils.equals(Constant.SUCCESS_RESPONSE, message)) {
-			closeSession(session);
+		if (StringUtils.equals(Constant.SUCCESS_RESPONSE, message)) {
 			return;
 		}
 		Gson gson = null;
@@ -257,10 +273,11 @@ public class ChatServer {
 			// 解析json出错
 			if (chatMessage == null)
 				return;
+			//不用做NPE判断，因为chatUser如果为空 则推出closeSession 所以不可能为空
+			chatMessage.setChatName(this.chatUser.getUsername());			
 			sendMessageToEveryoneInRoom(chatMessage);
 		} catch (Exception e) {// 发生错误即退出
 			e.printStackTrace();
-			return;
 		}
 	}
 
@@ -327,10 +344,10 @@ public class ChatServer {
 		try {
 			closeSession(session);
 			removeChatUserFromRoomHashMap(this.roomId, this.chatUserId);
-			error.printStackTrace();
+
 		} catch (Exception e) {
 			// TODO: handle exception
-			e.printStackTrace();
+			
 		}
 	}
 

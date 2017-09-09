@@ -34,6 +34,19 @@ public class ChatUserServiceImpl implements ChatUserService {
 	private ChatUserRepository chatUserRepository;
 
 	@Override
+	public boolean existsById(String chatUserId) {
+
+		return chatUserRepository.exists(chatUserId);
+
+	}
+
+	@Override
+	public ChatUser findChatUserById(String chatUserId) {
+
+		return chatUserRepository.findOne(chatUserId);
+	}
+
+	@Override
 	public boolean login(String username, String password) {
 		// TODO Auto-generated method stub
 		boolean res = false;
@@ -48,7 +61,7 @@ public class ChatUserServiceImpl implements ChatUserService {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			res=false;
+			res = false;
 		}
 
 		return res;

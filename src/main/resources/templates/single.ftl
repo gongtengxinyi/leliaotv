@@ -29,18 +29,21 @@
 
 <!-- Core JavaScript Files -->
 <script src="/js/bootstrap.min.js"></script>
-
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-        <script src="js/html5shiv.js"></script>
-        <script src="js/respond.min.js"></script>
-    <![endif]-->
-<script  src="/js/jquery.danmu.js"></script>
+    <link rel="stylesheet" type="text/css" href="/danmu/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/danmu/css/barrager.css">
+    <link rel="stylesheet" type="text/css" href="/danmu/pick-a-color/css/pick-a-color-1.2.3.min.css">
+    <link type="text/css" rel="stylesheet" href="/danmu/syntaxhighlighter/styles/shCoreDefault.css"/>
+    <script type="text/javascript" src="/danmu/js/tinycolor-0.9.15.min.js"></script>  
+    <script type="text/javascript" src="/danmu/js/jquery.barrager.js"></script>
+    <script type="text/javascript" src="/danmu/syntaxhighlighter/scripts/shCore.js"></script>
+    <script type="text/javascript" src="/danmu/syntaxhighlighter/scripts/shBrushJScript.js"></script>
+    <script type="text/javascript" src="/danmu/syntaxhighlighter/scripts/shBrushPhp.js"></script>
+    <script type="text/javascript" src="/danmu/pick-a-color/js/pick-a-color-1.2.3.min.js"></script> 
     <link rel="stylesheet"
 	href="/video-js//video-js.css" type="text/css">
     <script src="/video-js/video.js"></script>
 <script src="/video-js/videojs-contrib-hls.min.js"></script>
+
 <style type="text/css">
 
 .chat{
@@ -57,29 +60,28 @@
 	h4 {
 		line-height: 2em;
 	}
-	#danmuarea {
-		position: relative;
-		background: #222;
-		width:400px;
-		height: 200px;
-		margin-left: auto;
-		margin-right: auto;
 
-
-	}
-
- 
+ .chatmessage{
+	margin-left: 12px;
+	margin-top: 10px;
+	vertical-align: middle; /* 居中对齐， */
+	font-size: 16px;
+}
 
 	.ctr {
 		font-size: 1em;
 		  line-height: 2em;
 	}
+/* 	#danmu{ */
+/* 	position: absolute; */
+/* 	width: 650px; */
+/* 	height: 650px; */
+/* 	} */
 </style>
 </head>
 
 <body>
 	<header>
-	<!-- 隐藏域  -->
 	<input type="hidden"  id="chatUserIdHidden"  value="${chatUserId }">
 	<input type="hidden"  id="roomIdHidden"  value="${roomId }">
 		<!--Top-->
@@ -179,12 +181,15 @@
 		<div style="margin-top: 30px;margin-left: 30px">
 			<div class="row">
 				<div id="" class="col-lg-8">		
-				<div id="danmu">	</div>		
+<div id="danmu">
+				
 <video id="example-video"  class="video-js vjs-default-skin "  width="100%" height="100%"  controls>
   <source
      src="http://192.168.1.33/hls/ding.m3u8"
      type="application/x-mpegURL">
 </video>
+</div>	
+
 <br>
 					<div class="share">
 						<ul class="list-inline center">
@@ -568,7 +573,10 @@
 	<!-- JS -->
 	<script src="/owl-carousel/owl.carousel.js"></script>
 	<script type="text/javascript">	
-
+	   var player = videojs('example-video', { fluid: true }, function () {
+           this.play(); // if you don't trust autoplay for some reason  
+        });
+	
 	   var websocket=null;
 			// 判断当前浏览器是否支持WebSocket
 			if ('WebSocket' in window) {
@@ -586,12 +594,12 @@
 
 			// 连接发生错误的回调方法
 			websocket.onerror = function() {
-				alert("onerror");
+			
 			};
 
 			// 连接成功建立的回调方法
 			websocket.onopen = function() {
-				alert("open");
+				
 			}
 			// 接收到消息的回调方法
 			websocket.onmessage = function(event) {
@@ -601,8 +609,19 @@
 				}
 				var jsonObj = JSON.parse(event.data);
 				setMessageOnHtml(jsonObj);
-				add();
-				return;
+				add();					
+				var item={
+						   img:'/danmu/img/heisenberg.png', //图片 
+						   info:jsonObj.message, //文字 
+						   href:'http://www.yaseng.org', //链接 
+						   close:true, //显示关闭按钮 
+						   speed:8, //延迟,单位秒,默认8 
+						   bottom:600, //距离底部高度,单位px,默认随机 
+						   color:'#fff', //颜色,默认白色 
+						   old_ie_color:'#000000', //ie低版兼容色,不能与网页背景相同,默认黑色 
+				 };
+				
+						$('#danmu').barrager(item);
 			}
 			function add()
 			{
@@ -610,6 +629,7 @@
 			var div = document.getElementById('chatList');
 			div.scrollTop = div.scrollHeight;
 			}
+			
 			 $('#sendChatMessage').keydown(function(e){
 			   if(e.keyCode==13){
 				   createAndSendChatMessage();
@@ -635,23 +655,16 @@
 		    })((Math.random()*0x1000000<<0).toString(16))
 		}
 		function successToServer(){
-			var p="<span>连接弹幕成功。。。。。</span><br>";
+			var p="<span>连接弹幕成功，请开始你的表演。</span><br>";
 			$("#chatList").append(p);
 			return;
-		}
-		function createDanmu(message){
-		 var text_obj = '{"text":"' + message + '","color":"' +getReandomColor()+ '","size":"' + "2" + '","position":"' + "0" + '","time":' + 10 + '}'; 
-			return text_obj;
 		}
 		 function setMessageOnHtml(jsonObj) {
 		    	  //如果是聊天消息
 	          if (jsonObj.messageMode == 'CHAT_MESSAGE') {
-			    	var p="<span>" +jsonObj.message
+			    	var p="<span class=''>" +jsonObj.message
 			    			                   +"</span><br>";
-			    	$("#chatList").append(p);	    
-			    	
-			    	$('#danmu').danmu("add_danmu",createDanmu(jsonObj.message));    
-			    	$('#danmu').danmu('danmu_start'); 	
+			    	$("#chatList").append(p);	    			    
 			  }
 			    //如果是管理员系统消息
 			    else if (jsonObj.messageMode == 'ADMIN_MESSAGE') {
@@ -673,6 +686,7 @@
 	   				jsonObj.message = document.getElementById('sendChatMessage').value;
 	   				if(jsonObj.message==""){
                         alert("发送的字符串不能为空");
+                        return;
 		   				}
 	   				websocket.send(JSON.stringify(jsonObj));
 	   				$("#sendChatMessage").val("");				
@@ -737,25 +751,6 @@
 	   	  function showSelectButton(){
 	   	    	 $("#img").click();
 	   	    }
-	   var player = videojs('example-video', { fluid: true }, function () {
-           this.play(); // if you don't trust autoplay for some reason  
-        })
-$("#danmu").danmu({
-left: 0,    //区域的起始位置x坐标
-top: 0 ,  //区域的起始位置y坐标
-height: 400, //区域的高度 
-width: 890, //区域的宽度 
-zindex :100, //div的css样式zindex
-speed:20000, //弹幕速度，飞过区域的毫秒数 
-sumtime:900 , //弹幕运行总时间
-danmuss:{}, //danmuss对象，运行时的弹幕内容 
-default_font_color:"green", //弹幕默认字体颜色 
-font_size_small:16, //小号弹幕的字体大小,注意此属性值只能是整数
-font_size_big:24, //大号弹幕的字体大小 
-opacity:"0.9", //弹幕默认透明度 
-top_botton_danmu_time:6000 //顶端底端弹幕持续时间 
-} );
-	   $('#danmu').danmu('danmu_start'); 
 	</script>
 </body>
 </html>
