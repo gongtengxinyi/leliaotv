@@ -178,7 +178,7 @@
 
 	<!-- /////////////////////////////////////////Content -->
 	<div id="page-content" class="single-page">
-		<div style="margin-top: 30px;margin-left: 30px">
+		<div style="margin-top: 10px;margin-left: 10px">
 			<div class="row">
 				<div id="" class="col-lg-8">		
 <div id="danmu">
@@ -655,7 +655,7 @@
 		    })((Math.random()*0x1000000<<0).toString(16))
 		}
 		function successToServer(){
-			var p="<span>连接弹幕成功，请开始你的表演。</span><br>";
+			var p="<span>连接弹幕成功，请开始你的表演。。。。</span><br>";
 			$("#chatList").append(p);
 			return;
 		}

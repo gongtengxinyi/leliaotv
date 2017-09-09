@@ -21,18 +21,16 @@
 		var id = '#' + barrager_id;
 		var div_barrager = $("<div class='barrage' id='" + barrager_id + "'></div>").appendTo($(this));
 		$("#barrager_id").css("width", this.width() +50+ "px");
-		var window_height = $(window).height() - 100;		
+		var window_height = $(window).height();		
 		var this_height =  (window_height > this.height()) ? this.height() : window_height;
 		
 		var window_width = $(window).width() + 500;
 		var this_width =  (window_width > this.width()) ? this.width() : window_width;
 		var baseH=$("#menu").height()+$("#top").height();
-		var getH= $(window).height()-100-baseH- this.height();
-	var s=	Math.random() * (this.height()) ;
-
-		var bottom = (barrage.bottom == 0) ? Math.floor(s + getH) : barrage.bottom;
-		
-		div_barrager.css("bottom", bottom + "px");
+	    var t=	Math.random();
+	     var s=t*300 ;
+		var top =Math.floor(s) + baseH +100;
+		div_barrager.css("top", top + "px");
 		div_barrager_box = $("<div class='barrage_box cl'></div>").appendTo(div_barrager);
 		if(barrage.img){
 
