@@ -20,11 +20,18 @@
 		var barrager_id = 'barrage_' + time;
 		var id = '#' + barrager_id;
 		var div_barrager = $("<div class='barrage' id='" + barrager_id + "'></div>").appendTo($(this));
-		
-		var window_height = $(window).height() - 100;
+		$("#barrager_id").css("width", this.width() +50+ "px");
+		var window_height = $(window).height() - 100;		
 		var this_height =  (window_height > this.height()) ? this.height() : window_height;
-		var this_width =this.width();
-		var bottom = (barrage.bottom == 0) ? Math.floor(Math.random() * this_height + 40) : barrage.bottom;
+		
+		var window_width = $(window).width() + 500;
+		var this_width =  (window_width > this.width()) ? this.width() : window_width;
+		var baseH=$("#menu").height()+$("#top").height();
+		var getH= $(window).height()-100-baseH- this.height();
+	var s=	Math.random() * (this.height()) ;
+
+		var bottom = (barrage.bottom == 0) ? Math.floor(s + getH) : barrage.bottom;
+		
 		div_barrager.css("bottom", bottom + "px");
 		div_barrager_box = $("<div class='barrage_box cl'></div>").appendTo(div_barrager);
 		if(barrage.img){
@@ -58,7 +65,7 @@
 		var i = 0;
 		div_barrager.css('margin-right', 0);
 		
- 		$(id).animate({right:this_width},barrage.speed*1000,function(){
+ 		$(id).animate({right:1200},barrage.speed*1000,function(){
 
 			$(id).remove();
 		});
@@ -69,7 +76,7 @@
 
 		div_barrager_box.mouseout(function() {
 
-			$(id).animate({right:this_width},barrage.speed*1000,function(){
+			$(id).animate({right:1200},barrage.speed*1000,function(){
 
 				$(id).remove();
 			});

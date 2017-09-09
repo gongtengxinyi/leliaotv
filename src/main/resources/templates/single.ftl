@@ -616,7 +616,7 @@
 						   href:'http://www.yaseng.org', //链接 
 						   close:true, //显示关闭按钮 
 						   speed:8, //延迟,单位秒,默认8 
-						   bottom:600, //距离底部高度,单位px,默认随机 
+// 						   bottom:, //距离底部高度,单位px,默认随机 
 						   color:'#fff', //颜色,默认白色 
 						   old_ie_color:'#000000', //ie低版兼容色,不能与网页背景相同,默认黑色 
 				 };
