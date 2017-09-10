@@ -1,7 +1,15 @@
 package com.dingjianlei.springboot.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.dingjianlei.springboot.constants.Constant;
@@ -16,10 +24,10 @@ import com.dingjianlei.springboot.repository.ChatUserRepository;
  * addr)； Between --- 等价于 SQL 中的 between 关键字，比如 findBySalaryBetween(int max, int
  * min)； LessThan --- 等价于 SQL 中的 "<"，比如 findBySalaryLessThan(int max)；
  * GreaterThan --- 等价于 SQL 中的">"，比如 findBySalaryGreaterThan(int min)； IsNull ---
- * 等价于 SQL 中的 "is null"，比如 findByUsernameIsNull()； IsNotNull --- 等价于 SQL 中的
- * "is not null"，比如 findByUsernameIsNotNull()； NotNull --- 与 IsNotNull 等价； Like
- * --- 等价于 SQL 中的 "like"，比如 findByUsernameLike(String user)； NotLike --- 等价于 SQL
- * 中的 "not like"，比如 findByUsernameNotLike(String user)； OrderBy --- 等价于 SQL 中的
+ * 等价于 SQL 中的 "is null"，比如 findByUsernameIsNull()； IsNotNull --- 等价于 SQL 中的 "is
+ * not null"，比如 findByUsernameIsNotNull()； NotNull --- 与 IsNotNull 等价； Like ---
+ * 等价于 SQL 中的 "like"，比如 findByUsernameLike(String user)； NotLike --- 等价于 SQL 中的
+ * "not like"，比如 findByUsernameNotLike(String user)； OrderBy --- 等价于 SQL 中的
  * "order by"，比如 findByUsernameOrderBySalaryAsc(String user)； Not --- 等价于 SQL 中的
  * "！ ="，比如 findByUsernameNot(String user)； In --- 等价于 SQL 中的 "in"，比如
  * findByUsernameIn(Collection<String> userList) ，方法的参数可以是 Collection
@@ -41,37 +49,72 @@ public class ChatUserServiceImpl implements ChatUserService {
 	}
 
 	@Override
+	public List<ChatUser> getRank() {
+		Sort sort = new Sort(Direction.DESC, "score");
+		List<ChatUser> chatUserList = new ArrayList<ChatUser>();
+		Pageable pageable = new PageRequest(0, Constant.RANK_COUNT, sort);
+		Page<ChatUser> chatPage = chatUserRepository.findAll(pageable);
+		if (chatPage != null) {
+			chatUserList = chatPage.getContent();
+		}
+		if (chatUserList.isEmpty()) {
+			ChatUser chatUser = createVirturlChatUser();
+			chatUserList.add(chatUser);
+		}
+		return chatUserList;
+	}
+
+	/**
+	 * 造假的chatUser 把他加入到list,用来填充排行榜数据
+	 * 
+	 * @return
+	 */
+	private ChatUser createVirturlChatUser() {
+		ChatUser chatUser = new ChatUser();
+		chatUser.setUsername("工藤新一");
+		chatUser.setScore("1000");
+		return chatUser;
+	}
+
+	@Override
+	public boolean updateScoreByChatUserId(String chatUserId, String addScore) {
+		int res = chatUserRepository.updateScoreByChatUserId(addScore, chatUserId);
+		if (res > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
 	public ChatUser findChatUserById(String chatUserId) {
 
 		return chatUserRepository.findOne(chatUserId);
 	}
 
 	@Override
-	public boolean login(String username, String password) {
-		// TODO Auto-generated method stub
-		boolean res = false;
+	public ChatUser login(String username, String password) {
+		ChatUser chatUser = null;
 		try {
-			ChatUser chatUser = chatUserRepository.findByUsername(username);
+			chatUser = chatUserRepository.findByUsername(username);
 			if (chatUser == null) {
-				return res;
+				return chatUser;
 			} else {
 				if (StringUtils.equals(password, chatUser.getPassword())) {
-					res = true;
+					return chatUser;
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			res = false;
-		}
+			return chatUser;
 
-		return res;
+		}
+		return chatUser;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dingjianlei.springboot.service.ChatUserService#insertChatUser(com.
+	 * @see com.dingjianlei.springboot.service.ChatUserService#insertChatUser(com.
 	 * dingjianlei.springboot.entity.ChatUser)
 	 */
 	@Override
@@ -91,8 +134,7 @@ public class ChatUserServiceImpl implements ChatUserService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dingjianlei.springboot.service.ChatUserService#checkChatUser(java.
+	 * @see com.dingjianlei.springboot.service.ChatUserService#checkChatUser(java.
 	 * lang.String, java.lang.String, java.lang.String) 根据传入的type进行判断
 	 * 检查邮箱或者用户名是否有注册的账号
 	 */

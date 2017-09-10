@@ -25,7 +25,18 @@ public class ChatUser {
     private Integer account;
     /**手机号**/
     @Column(nullable = false)
-    private String  mobile;
+    private String  mobile;   
+    /**积分**/
+    @Column(nullable = false)
+    private String score;
+    
+	
+	public String getScore() {
+		return score;
+	}
+	public void setScore(String score) {
+		this.score = score;
+	}
 	public String getId() {
 		return id;
 	}

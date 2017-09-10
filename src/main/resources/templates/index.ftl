@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 	
-    <title>首页</title>
+    <title>乐聊TV幸运大抽奖</title>
 	
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css"  type="text/css">

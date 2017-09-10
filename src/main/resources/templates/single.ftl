@@ -9,10 +9,11 @@
 <title>国内首家喷人平台 打造第一发泄地噪音发生地</title>
 
 <!-- Bootstrap Core CSS -->
+<link rel="stylesheet" href="/css/css.css?v=15" />
 <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
 <!-- Custom CSS -->
 <link rel="stylesheet" href="/css/style.css">
-
+<link rel="stylesheet" href="/css/chat.css"/>
 <!-- Owl Carousel Assets -->
 <link href="/owl-carousel/owl.carousel.css" rel="stylesheet">
 <link href="/owl-carousel/owl.theme.css" rel="stylesheet">
@@ -84,6 +85,7 @@
 	<header>
 	<input type="hidden"  id="chatUserIdHidden"  value="${chatUserId }">
 	<input type="hidden"  id="roomIdHidden"  value="${roomId }">
+		<input type="hidden"  id="loginButton"  value="${loginStatus }">
 		<!--Top-->
 		<nav id="top">
 			<div class="container">
@@ -348,7 +350,7 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div>			
 				<div id="" class="col-lg-4">
 					<!---- Start Widget ---->
 					<div class="panel panel-default"
@@ -364,47 +366,62 @@
 							</ul>
 							<div id="myTabContent" class="tab-content">
 								<div class="tab-pane fade in active" id="chat">
-									<div class="panel panel-default">
-										<div class="panel-body" style="width: 350px; height: 350px" >
-											<div id="chatList" style="overflow-y:scroll;overflow-x:hidden;width: 350px; height: 330px" >
-											  
-											  
-											</div>
+								<div style="background-color:green;">
+									<div class="panel panel-default" >
+					<div class="panel-body" style="width: 350px; height: 350px" >
+				<div id="chatList" style="background-color:#FFFFF0;overflow-y:scroll;overflow-x:hidden;width: 350px; 
+				height: 330px;"> 
+				</div>
 										</div>
 									</div>
-									<div class="panel panel-default">
-										<textarea  id="sendChatMessage"
-											style="width: 349px; height: 50px; resize: none; border: 0; overflow-y: hidden;">
-										</textarea>
-									</div>
-										<div style="float: right">
-	<button id="send" type="button" class="btn btn btn-primary btn-lg" onclick="createAndSendChatMessage()">发送</button>
-									</div>
 									
+									</div>
+					<div class="panel panel-default texttive">
+				<div class="chat_button" id="loginButtonFor">
+<a id="" class="login_button" href="#" >请登录</a>
+</div>	
+			<textarea  id="sendChatMessage"
+									onmousedown="s(event,this)"		
+									style="width: 349px; height: 80px; resize: none; border: 0; overflow-y: hidden;">
+					</textarea>
+				
+					<div align="right">
+	<button id="send" type="button" class="btn btn btn-primary btn-lg" onclick="createAndSendChatMessage()">发送</button>
+</div>
+
+									</div>													
 								</div>
 
 								<div class="tab-pane fade" id="rank">
-									<ul>
-										<li>1</li>
-										<li>2</li>
-										<li>3</li>
-										<li>4</li>
-										<li>5</li>
-										<li>6</li>
-										<li>7</li>
-
-									</ul>
+								
+									<section id="ranking" style="margin-top: 20px">								
+									  <span id="ranking_title"> <a id="" href="/draw.ftl?chatUserId=${chatUserId }" title="变身">我要抽奖</a></span>
+								
+									 <br>
+  <section id="ranking_list">
+<#list chatUserList as chatUser>
+    <section class="box">
+      <section class="col_1" title="1"> ${chatUser_index+1}</section>
+      <section class="col_2"><img src="/images/pic.jpg"  /></section>
+      <section class="col_3">${chatUser.username }</section>
+      <section class="col_4">${chatUser.score }</section>
+    </section>
+  </#list>
+  </section>
+  <a id="play_game" href="#" title="变身">开始变豪</a> 
+  </section>
 
 								</div>
 												
 								
-									<div class="tab-pane fade" id="fuli">
+					<div class="tab-pane fade" id="fuli">
 								<div class="tab-pane fade in active" id="chat">
 
 
 									<div class="panel panel-default">
-										<div class="panel-body" style="width: 350px; height: 350px" id="chatListForImage">
-											这是一个基本的面板
+										<div class="panel-body" style="background-color:#FFFFF0;overflow-y:scroll;overflow-x:hidden;width: 350px; 
+				height: 330px;"  id="chatListForTuhao">
+			
 											</div>
 									</div>
 
@@ -572,7 +589,14 @@
 
 	<!-- JS -->
 	<script src="/owl-carousel/owl.carousel.js"></script>
-	<script type="text/javascript">	
+	<script type="text/javascript">
+	var loginButtonStatus=$("#loginButton").val();
+	//没登录显示登录按钮，并且text不可编辑
+	if(loginButtonStatus=='no'){
+		$("#loginButtonFor").show();
+		$("#send").hide();	
+		$("#sendChatMessage").attr( "disabled", true).css("cursor", "default");	
+		}
 	   var player = videojs('example-video', { fluid: true }, function () {
            this.play(); // if you don't trust autoplay for some reason  
         });
@@ -617,11 +641,20 @@
 						   close:true, //显示关闭按钮 
 						   speed:8, //延迟,单位秒,默认8 
 // 						   bottom:, //距离底部高度,单位px,默认随机 
-						   color:'#fff', //颜色,默认白色 
+						   color:getReandomColor(), //颜色,默认白色 
 						   old_ie_color:'#000000', //ie低版兼容色,不能与网页背景相同,默认黑色 
 				 };
 				
 						$('#danmu').barrager(item);
+			}
+			function s(e,a)
+			{
+				 if ( e && e.preventDefault )
+			            e.preventDefault();
+				else 
+				window.event.returnValue=false;
+					a.focus();
+					
 			}
 			function add()
 			{
@@ -655,16 +688,25 @@
 		    })((Math.random()*0x1000000<<0).toString(16))
 		}
 		function successToServer(){
-			var p="<span>连接弹幕成功，请开始你的表演。。。。</span><br>";
+			var p="<span style='color:#00ff00'>连接弹幕成功，请开始你的表演。。。。</span><br>";
+			var p1="<span style='color:#00ff00;font-size:15px'>可以上传和下载种子，图片，小视频都行哦~</span><br><br>";
 			$("#chatList").append(p);
+			$("#chatListForTuhao").append(p1);
 			return;
 		}
 		 function setMessageOnHtml(jsonObj) {
+			 if (typeof(jsonObj.chatName) == "undefined"){
+				jsonObj.chatName="佚名";
+				 }
+
 		    	  //如果是聊天消息
-	          if (jsonObj.messageMode == 'CHAT_MESSAGE') {
-			    	var p="<span class=''>" +jsonObj.message
-			    			                   +"</span><br>";
-			    	$("#chatList").append(p);	    			    
+	          if (jsonObj.messageMode == 'CHAT_MESSAGE') {	        	
+	            var word="<div  class='chat_div'><img class='chat_img'  src='/images/pic.jpg' />"
+		                      +"<span class='chat_word'>"
+		                      +jsonObj.chatName+"："
+		                      +jsonObj.message
+		                      +"</span></div>";
+			    	$("#chatList").append(word);	    			    
 			  }
 			    //如果是管理员系统消息
 			    else if (jsonObj.messageMode == 'ADMIN_MESSAGE') {
@@ -684,7 +726,8 @@
 	   				jsonObj.messageMode = "CHAT_MESSAGE";
 	   				jsonObj.messageType = "TEXT";
 	   				jsonObj.message = document.getElementById('sendChatMessage').value;
-	   				if(jsonObj.message==""){
+	   			     var str =	jQuery.trim(jsonObj.message);//去除空格
+	   				if(str==""){
                         alert("发送的字符串不能为空");
                         return;
 		   				}

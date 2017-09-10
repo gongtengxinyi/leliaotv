@@ -344,7 +344,6 @@ public class ChatServer {
 		try {
 			closeSession(session);
 			removeChatUserFromRoomHashMap(this.roomId, this.chatUserId);
-
 		} catch (Exception e) {
 			// TODO: handle exception
 			
