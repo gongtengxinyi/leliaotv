@@ -1,8 +1,6 @@
 package com.dingjianlei.springboot.login.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +15,6 @@ import com.dingjianlei.springboot.entity.ChatUser;
 import com.dingjianlei.springboot.entity.Favorites;
 import com.dingjianlei.springboot.service.ChatUserService;
 import com.dingjianlei.springboot.service.FavoritesService;
-import com.dingjianlei.springboot.utils.HttpClientUtil;
 
 /**
  * 登录 注册 controller

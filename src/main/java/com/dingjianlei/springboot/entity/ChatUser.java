@@ -30,7 +30,16 @@ public class ChatUser {
     @Column(nullable = false)
     private String score;
     
-	
+    /**是否是方管**/
+    @Column(nullable = false)
+    private String  roomAdmin;  
+    
+	public String getRoomAdmin() {
+		return roomAdmin;
+	}
+	public void setRoomAdmin(String roomAdmin) {
+		this.roomAdmin = roomAdmin;
+	}
 	public String getScore() {
 		return score;
 	}

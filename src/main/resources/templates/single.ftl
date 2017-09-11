@@ -85,7 +85,8 @@
 	<header>
 	<input type="hidden"  id="chatUserIdHidden"  value="${chatUserId }">
 	<input type="hidden"  id="roomIdHidden"  value="${roomId }">
-		<input type="hidden"  id="loginButton"  value="${loginStatus }">
+	<input type="hidden"  id="loginButton"  value="${loginStatus }">
+	<input type="hidden"  id="chatUser"  value="${chatUser.roomAdmin }">
 		<!--Top-->
 		<nav id="top">
 			<div class="container">
@@ -415,7 +416,7 @@
 												
 								
 					<div class="tab-pane fade" id="fuli">
-								<div class="tab-pane fade in active" id="chat">
+								<div class="tab-pane fade in active" id="chatForTuhao">
 
 
 									<div class="panel panel-default">
@@ -464,8 +465,7 @@
 				<li><a href="#"><i class="fa fa-twitter"></i> <span>Twitter</span></a></li>
 				<li><a href="#"><i class="fa fa-facebook"></i> <span>Facebook</span></a></li>
 				<li><a href="#"><i class="fa fa-google-plus"></i> <span>Google+</span></a></li>
-				<li><a href="#"><i class="fa fa-youtube"></i> <span>Video's
-							Tag</span></a></li>
+				<li><a href="#"><i class="fa fa-youtube"></i> <span>Video'sTag</span></a></li>
 				<li><a href="#"><i class="fa fa-vimeo-square"></i> <span>Vimeo</span></a></li>
 				<li><a href="#"><i class="fa fa-pinterest"></i> <span>Pinterest</span></a></li>
 				<li><a href="#"><i class="fa fa-rss"></i> <span>Rss</span></a></li>
@@ -590,6 +590,7 @@
 	<!-- JS -->
 	<script src="/owl-carousel/owl.carousel.js"></script>
 	<script type="text/javascript">
+	var chatUser = $("#chatUser").val();
 	var loginButtonStatus=$("#loginButton").val();
 	//没登录显示登录按钮，并且text不可编辑
 	if(loginButtonStatus=='no'){
@@ -679,7 +680,18 @@
 			websocket.onclose = function() {
 			}
 		}
-
+		  function waitBinary(jsonObj){
+			  var uuid = jsonObj.uuid;
+	          	var binaryAddress	 = jsonObj.binaryAddress;
+		        $("#"+uuid).load(function(){				        	
+		        });
+		        $("#"+uuid).error(function(){	
+		        	  $("#"+uuid).attr("src","static/images/loading.gif");	
+		        	 var ime= setTimeout(function(){
+		        	  	  $("#"+uuid).attr("src",jsonObj.binaryAddress+"?"+Math.random());				        	  	  
+		        	 },3000); 
+		        });
+		  }
 	   
 		//随机获取颜色值
 		function getReandomColor(){
@@ -699,101 +711,134 @@
 				jsonObj.chatName="佚名";
 				 }
 
-		    	  //如果是聊天消息
-	          if (jsonObj.messageMode == 'CHAT_MESSAGE') {	        	
-	            var word="<div  class='chat_div'><img class='chat_img'  src='/images/pic.jpg' />"
-		                      +"<span class='chat_word'>"
-		                      +jsonObj.chatName+"："
-		                      +jsonObj.message
-		                      +"</span></div>";
-			    	$("#chatList").append(word);	    			    
-			  }
-			    //如果是管理员系统消息
-			    else if (jsonObj.messageMode == 'ADMIN_MESSAGE') {
+		    
+		//如果是聊天消息
+			if (jsonObj.messageMode == 'CHAT_MESSAGE') {
+				if (jsonObj.messageType == 'TEXT') {
+					var word = "<div  class='chat_div'><img class='chat_img'  src='/images/pic.jpg' />"
+						+ "<span class='chat_word'>"
+						+ jsonObj.chatName
+						+ "："
+						+ jsonObj.message + "</span></div>";
+				$("#chatList").append(word);
+				} else if (jsonObj.messageType == '') {
 
-			} 
-			    //系统广播
-			    else {
+				} else if (jsonObj.messageType == '') {
+
+				} else if (jsonObj.messageType == '') {
+
+				}
+			}
+			//如果是管理员系统消息
+			else if (jsonObj.messageMode == 'ADMIN_MESSAGE') {
+				if (jsonObj.messageType == 'TEXT') {
+					var word = "<div  class='chat_div'><img class='chat_img'  src='/images/pic.jpg' />"
+						+ "<span class='chat_word'>"
+						+ jsonObj.chatName
+						+ "："
+						+ jsonObj.message + "</span></div>";
+				$("#chatList").append(word);
+				} else if (jsonObj.messageType == '') {
+
+				} else if (jsonObj.messageType == '') {
+
+				} else if (jsonObj.messageType == '') {
+
+				}
+			}
+			//系统广播
+			else {
 
 			}
 
 		}
-			   
-	 //创建聊天消息	
-	              function createAndSendChatMessage() {
-	   				var jsonObj = {};
-	   				jsonObj.uuid=UUID();
-	   				jsonObj.messageMode = "CHAT_MESSAGE";
-	   				jsonObj.messageType = "TEXT";
-	   				jsonObj.message = document.getElementById('sendChatMessage').value;
-	   			     var str =	jQuery.trim(jsonObj.message);//去除空格
-	   				if(str==""){
-                        alert("发送的字符串不能为空");
-                        return;
-		   				}
-	   				websocket.send(JSON.stringify(jsonObj));
-	   				$("#sendChatMessage").val("");				
-	   			}
-	   //发送图片或者文件
-	   	function  preView()    {    	 
-	           var img = document.getElementById('img');
-	                   var suffix=img.value;
-	           var strs= new Array(); //定义一数组用来接收后缀
-	           strs=suffix.split(".");
-	           var fileSuffix=strs[1];
-	           var imgFile = new FileReader();
-	           imgFile.readAsDataURL(img.files[0]);       
-	           imgFile.onload = function () {
-	           	if(fileSuffix=='GIF'||fileSuffix=='gif'||fileSuffix=='JPEG'||fileSuffix=='jpeg'||fileSuffix=='PNG'||fileSuffix=='png'||fileSuffix=='JPG'||fileSuffix=='jpg'){
-	           		sendImageNo(this.result);	
-	           		return ;
-	           	}    else{
-	           		sendBinary(this.result,fileSuffix);
-	           	}         		        	       
-	           }
-	          }
-	   	/**
-	   	发送二进制文件
-	   	**/
-	   	 function sendBinary(binary,fileSuffix){
-	   	        var jsonObj = {};
-	   	        jsonObj.uuid=UUID();
-	   			jsonObj.indentId = indentId;
-	   			jsonObj.messageMode = "INDENT_MESSAGE";
-	   			jsonObj.messageType ="BINARY";
-	   			jsonObj.suffix =fileSuffix;
-	   			jsonObj.imageBase64=binary;
-	   			var messageJson=JSON.stringify(jsonObj);
-	   			websocket.send(messageJson);
-	   		    }
-	   	// uuid
-	   	
-	        function UUID()   {
-	            var s = [];
-	            var hexDigits = "0123456789abcdef";
-	            for (var i = 0; i < 36; i++) {
-	                s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
-	            }
-	            s[14] = "4";  // bits 12-15 of the time_hi_and_version field to 0010
-	            s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);  // bits 6-7 of the clock_seq_hi_and_reserved to 01
-	            s[8] = s[13] = s[18] = s[23] = "-";
-	            var uuid = s.join("");
-	            return uuid;
-	    }
-	       function sendImageNo(image)
-	       {
-	           var jsonObj = {};
-	   		jsonObj.indentId = indentId;
-	   		jsonObj.uuid=UUID();
-	   		jsonObj.messageMode = "INDENT_MESSAGE";
-	   		jsonObj.messageType ="IMAGE";		
-	   		jsonObj.imageBase64=image;
-	   		var messageJson=JSON.stringify(jsonObj);
-	   		websocket.send(messageJson);
-	       }
-	   	  function showSelectButton(){
-	   	    	 $("#img").click();
-	   	    }
+
+		//创建聊天消息	
+		function createAndSendChatMessage() {
+			var jsonObj = {};
+			jsonObj.uuid = UUID();
+			if (chatUser == 'YES') {
+				jsonObj.messageMode = "ADMIN_MESSAGE";
+			} else {
+				jsonObj.messageMode = "CHAT_MESSAGE";
+			}
+
+			jsonObj.messageType = "TEXT";
+			jsonObj.message = document.getElementById('sendChatMessage').value;
+			var str = jQuery.trim(jsonObj.message);//去除空格
+			if (str == "") {
+				alert("发送的字符串不能为空");
+				return;
+			}
+			websocket.send(JSON.stringify(jsonObj));
+			$("#sendChatMessage").val("");
+		}
+		//发送图片或者文件
+		function preView() {
+			var img = document.getElementById('img');
+			var suffix = img.value;
+			var strs = new Array(); //定义一数组用来接收后缀
+			strs = suffix.split(".");
+			var fileSuffix = strs[1];
+			var imgFile = new FileReader();
+			imgFile.readAsDataURL(img.files[0]);
+			imgFile.onload = function() {
+				sendBinary(this.result, fileSuffix);
+			}
+		}
+		/**
+		发送二进制文件  图片 小视频 种子文件 动图
+		 **/
+
+		function sendBinary(binary, fileSuffix) {
+			var jsonObj = {};
+			jsonObj.uuid = UUID();
+			if (chatUser == 'YES') {
+				jsonObj.messageMode = "ADMIN_MESSAGE";
+			} else {
+				jsonObj.messageMode = "CHAT_MESSAGE";
+			}
+			if (fileSuffix == 'GIF' || fileSuffix == 'gif'
+					|| fileSuffix == 'JPEG' || fileSuffix == 'jpeg'
+					|| fileSuffix == 'PNG' || fileSuffix == 'png'
+					|| fileSuffix == 'JPG' || fileSuffix == 'jpg') {
+				jsonObj.messageType = "IMAGE";
+			}
+
+			if (fileSuffix == 'torrent') {
+				jsonObj.messageType = "TORRENT";
+			}
+			if (fileSuffix == 'mp4' || fileSuffix == 'avi'
+					|| fileSuffix == 'mov' || fileSuffix == 'flv'
+					|| fileSuffix == 'rmvb' || fileSuffix == 'wmv'
+					|| fileSuffix == 'MP4' || fileSuffix == 'AVI'
+					|| fileSuffix == 'MOV' || fileSuffix == 'FLV'
+					|| fileSuffix == 'RMVB' || fileSuffix == 'WMV') {
+				jsonObj.messageType = "VIDEO";
+			} else {
+				jsonObj.messageType = "BINARY";
+			}
+			jsonObj.suffix = fileSuffix;
+			jsonObj.imageBase64 = binary;
+			var messageJson = JSON.stringify(jsonObj);
+			websocket.send(messageJson);
+		}
+
+		function UUID() {
+			var s = [];
+			var hexDigits = "0123456789abcdef";
+			for (var i = 0; i < 36; i++) {
+				s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+			}
+			s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
+			s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
+			s[8] = s[13] = s[18] = s[23] = "-";
+			var uuid = s.join("");
+			return uuid;
+		}
+		function showSelectButton() {
+			$("#img").click();
+		}
 	</script>
 </body>
 </html>

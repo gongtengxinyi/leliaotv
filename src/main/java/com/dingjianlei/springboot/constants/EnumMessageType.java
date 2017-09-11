@@ -11,7 +11,8 @@ public enum EnumMessageType{
 	AUDIO("音频"),
 	BINARY("二进制"),
 	VIDEO("小视频"),
-	LOCATION("位置")
+	LOCATION("位置"),
+	TORRENT("种子"),
 	;
 
 	private String text;

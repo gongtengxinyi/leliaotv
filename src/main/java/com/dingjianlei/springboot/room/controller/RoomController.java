@@ -25,6 +25,8 @@ public class RoomController {
 		//传身份到页面进行websocket的连接 用来初始化 弹幕
 		Room room = roomService.findById(roomId);
 		List<ChatUser> chatUserList = chatUserService.getRank();
+		ChatUser chatUser  =  chatUserService.findChatUserById(chatUserId);
+		map.addAttribute("chatUser", chatUser);
 		map.addAttribute("chatUserList", chatUserList);
 		map.put("loginStatus", "no");
 		map.put("room", room);
