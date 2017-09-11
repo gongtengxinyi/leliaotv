@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class ImageThread  extends Thread{
@@ -28,7 +29,7 @@ public class ImageThread  extends Thread{
 	}
 public static void main(String[] args) {
 	//下载网页
-	String URL="http://www.youku.com/";
+	String URL="http://www.jianshu.com/";
 //	#focus > div:nth-child(3) > a > img  #cmain > div.topBox > div.other > table > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(2) > td > table:nth-child(1) > tbody > tr:nth-child(1) > td > a
 	Document document=null;
 	try {
@@ -39,8 +40,9 @@ public static void main(String[] args) {
 	}
 	//#m_239517 > div > div.c > div > div:nth-child(3) > div > div > a
 	//在下载的document里进行检索的语句
-  Elements select = document.select("#m_239517");
-  System.out.println(select);
+  Elements select = document.select(".title");
+System.out.println(select);
 	//这样test标签就是我们最开始右键单击检查的标签
 }
 }
+
