@@ -1,7 +1,12 @@
 package com.dingjianlei.springboot.chat;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Iterator;
+import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -16,15 +21,23 @@ import javax.websocket.server.ServerEndpoint;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.stereotype.Component;
 
 import com.dingjianlei.springboot.config.SpringContextHolder;
+import com.dingjianlei.springboot.config.StartUpListenerSpring;
 import com.dingjianlei.springboot.constants.Constant;
+import com.dingjianlei.springboot.constants.EnumMessageType;
+import com.dingjianlei.springboot.constants.ImgConstants;
 import com.dingjianlei.springboot.dto.ChatMessage;
 import com.dingjianlei.springboot.entity.ChatUser;
 import com.dingjianlei.springboot.service.ChatUserService;
 import com.dingjianlei.springboot.service.ChatUserServiceImpl;
+import com.dingjianlei.springboot.utils.ImageUtil;
+import com.dingjianlei.springboot.utils.UuidUtil;
 import com.google.gson.Gson;
+
+import sun.misc.BASE64Decoder;
 
 /***
  * 即时通讯服务的服务模块<br/>
@@ -47,10 +60,11 @@ public class ChatServer {
 	private String token;
 	/** 房间号 **/
 	private String roomId;
-	/** chatUser 主键Id**/
+	/** chatUser 主键Id **/
 	private String chatUserId;
-	/**chatUserd对象**/
-     private ChatUser chatUser;
+	/** chatUserd对象 **/
+	private ChatUser chatUser;
+
 	/**
 	 * concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。若要实现服务端与单一客户端通信的话，
 	 * 可以使用Map来存放，其中Key可以为用户标识·1
@@ -110,8 +124,8 @@ public class ChatServer {
 		// 验证账号，防止伪造
 		this.chatUser = loginChatServer(chatUserId);
 		if (this.chatUser == null) {
-             closeSession(session);
-             return;
+			closeSession(session);
+			return;
 		}
 		addChatUserToHashMap(roomId, chatUserId);
 		try {
@@ -245,7 +259,7 @@ public class ChatServer {
 			removeChatUserFromRoomHashMap(this.roomId, this.chatUserId);
 			subOnlineCount(); // 在线数减1
 		} catch (Exception e) {
-			
+
 		}
 	}
 
@@ -273,12 +287,175 @@ public class ChatServer {
 			// 解析json出错
 			if (chatMessage == null)
 				return;
-			//不用做NPE判断，因为chatUser如果为空 则推出closeSession 所以不可能为空
-			chatMessage.setChatName(this.chatUser.getUsername());			
+			/**
+			 * 目的为了以后对每个模块进行拓展，所以分开写
+			 * 
+			 */
+			// 如果是图片类型的消息体
+			if (StringUtils.equals(chatMessage.getMessageType(), EnumMessageType.IMAGE.name())) {
+				try {
+					boolean dealImageResult = dealBinary(chatMessage);// 处理图片结果
+					if (!dealImageResult) {
+						return;// 如果没生成，则返回
+					}
+				} catch (Exception e) {
+					logger.error("处理图片异常" + e.getMessage());
+				}
+			}
+			// 处理小视频
+			else if ((StringUtils.equals(chatMessage.getMessageType(), EnumMessageType.VIDEO.name()))) {
+				try {
+					boolean dealVideoResult = dealBinary(chatMessage);
+					if (!dealVideoResult) {
+						return;
+					}
+				} catch (Exception e) {
+					logger.error("处理小视频异常" + e.getMessage());
+				}
+
+			}
+			// 处理二进制文件
+			else if ((StringUtils.equals(chatMessage.getMessageType(), EnumMessageType.BINARY.name()))) {
+				try {
+					boolean dealBinaryResult = dealBinary(chatMessage);
+					if (!dealBinaryResult) {
+						return;
+					}
+				} catch (Exception e) {
+					// TODO: handle exception
+					logger.error("处理文件异常" + e.getMessage());
+				}
+			}
+			chatMessage.setImageBase64("");// 清空串
+			// 不用做NPE判断，因为chatUser如果为空 则推出closeSession 所以不可能为空
+			chatMessage.setChatName(this.chatUser.getUsername());
 			sendMessageToEveryoneInRoom(chatMessage);
 		} catch (Exception e) {// 发生错误即退出
 			e.printStackTrace();
 		}
+	}
+
+	// 构造文件路径字符串 格式为年月日 比如 2006/200608/20060801
+	private String datePart() {
+		Calendar c = Calendar.getInstance();
+		/********************** 年度目录2006 **********************************/
+		StringBuilder part = new StringBuilder().append(c.get(Calendar.YEAR)); // 当前年度
+		part.append("/");
+
+		/**********************
+		 * 年度月份目录 200608
+		 **********************************/
+		part.append(c.get(Calendar.YEAR));
+		int month = c.get(Calendar.MONTH) + 1;
+		if (month < 10) {
+			part.append("0");
+		}
+		part.append(month);
+		part.append("/");
+		/**********************
+		 * 年度月份日期目录 20060801
+		 **********************************/
+		part.append(c.get(Calendar.YEAR));
+		if (month < 10) {
+			part.append("0");
+		}
+		part.append(month);
+		int day = c.get(Calendar.DATE);
+
+		if (day < 10) {
+			part.append("0");
+		}
+		part.append(day);
+
+		return part.toString();
+	}
+
+	/**
+	 * 解析base64字符串的函数，将其转换成音频
+	 * 
+	 * @param chatMessage
+	 * @return boolean
+	 */
+	private boolean dealBinary(ChatMessage chatMessage) {
+		try {
+			String uploadBasepath = StartUpListenerSpring.uploadBasepath;
+			String downloadBasepath = StartUpListenerSpring.downloadBasepath;//
+			String fileName = UuidUtil.get32UUID();// 文件名字
+			String imgDatePart = datePart();
+			StringBuilder sb = new StringBuilder();
+			sb.append(uploadBasepath).append("/").append(imgDatePart).append("/");
+			File dateFile = new File(sb.toString());
+			StringBuilder binaryUrl = new StringBuilder();
+			if (!dateFile.exists()) {
+				try {
+					dateFile.mkdirs();
+				} catch (Exception e) {
+					logger.error("创建文件夹失败" + e);
+				}
+			}
+			String imgStr = chatMessage.getImageBase64();// 获取文件的base64串
+			if (StringUtils.isNotBlank(imgStr)) {
+				String imgStrTemp = "";
+				String[] str = imgStr.split(",");
+				imgStrTemp = str[1];// base串分割，要不生成不了完整文件
+				binaryUrl.append(downloadBasepath).append("/").append(imgDatePart).append("/").append(fileName)
+						.append(".").append(chatMessage.getSuffix());
+				int result = generateImage(imgStrTemp,
+						sb.append(fileName).append(".").append(chatMessage.getSuffix()).toString()); // 根据base64生成wenjian
+				sb=null;//将资源释放
+				if (result == 1) {
+					chatMessage.setBinaryAddress(binaryUrl.toString());// 设置回填url
+				} else {
+					logger.info("生成二进制文件失败");// 此时文件有问题
+					chatMessage.setBinaryAddress(binaryUrl.toString());// 设置回填url
+				}
+			} else {
+				logger.info("二进制文件base64串为空");
+			}
+		} catch (Exception e) {
+			logger.error("base64 字符串 解析 二进制错误" + e);
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * 将图片base64字符串转换成 图片
+	 * 
+	 * @param imgStr
+	 * @param path
+	 * @return
+	 * @throws IOException
+	 */
+	public static int generateImage(String imgStr, String path) throws IOException {
+		if (imgStr == null) // 图像数据为空
+		{
+			// logger.error("文件数据为空");
+			return 0;
+		}
+
+		BASE64Decoder d = new BASE64Decoder();
+		byte[] bs = null;
+		try {
+			bs = d.decodeBuffer(imgStr);
+		} catch (IOException e1) {
+			// logger.error(e1);
+			return 0;
+
+		}
+		FileOutputStream os;
+		try {
+			os = new FileOutputStream(path);
+			os.write(bs);
+			os.close();
+		} catch (FileNotFoundException e) {
+			// logger.error(e);
+			return 0;
+			// TODO Auto-generated catch block
+
+		}
+		return 1;
 	}
 
 	private boolean sendMessageToEveryoneInRoom(ChatMessage chatMessage) {
@@ -344,10 +521,9 @@ public class ChatServer {
 		try {
 			closeSession(session);
 			removeChatUserFromRoomHashMap(this.roomId, this.chatUserId);
-
 		} catch (Exception e) {
 			// TODO: handle exception
-			
+
 		}
 	}
 

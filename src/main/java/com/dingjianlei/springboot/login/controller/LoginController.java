@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dingjianlei.springboot.constants.Constant;
 import com.dingjianlei.springboot.dto.ResultObject;
 import com.dingjianlei.springboot.entity.ChatUser;
 import com.dingjianlei.springboot.entity.Favorites;
@@ -35,19 +36,31 @@ public class LoginController {
 	 * @param password
 	 * @return
 	 */
+	@SuppressWarnings("finally")
 	@RequestMapping("login")
 	public String getLogin(String username, String password, ModelMap modelMap) {
-		boolean res = chatUserService.login(username, password);
-		if (res) {
-			List<Favorites> favList =	fillFavoritesListByUsername(favoritesService, username);
-			modelMap.addAttribute("favoritesList", favList);
-			return "index";
+		ChatUser chatUser = chatUserService.login(username, password);
+		// 无论出错都必须跳转到首页
+		if (chatUser != null) {
+			try {// 登陆时增加积分 最好用消息队列 这里用httpclent模拟
+				List<Favorites> favList = fillFavoritesListByUsername(favoritesService, username);
+				modelMap.addAttribute("favoritesList", favList);
+
+				chatUserService.updateScoreByChatUserId(chatUser.getId(), Constant.LOGIN_ADD_SCORE);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				return "index";
+			}
 		} else {
+			// 如果登陆失败，必须返回到login页面
 			return "login";
 		}
 	}
 
-	/** 登录成功后将所喜欢的主播查找出来
+	/**
+	 * 登录成功后将所喜欢的主播查找出来
+	 * 
 	 * @param favoritesService
 	 * @param username
 	 * @return

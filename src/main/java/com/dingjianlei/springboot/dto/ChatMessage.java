@@ -17,7 +17,7 @@ public class ChatMessage {
 	private String suffix;// 二进制文件后缀，如txt,acc,jpg,png,gif等
 	private String uuid;// 文件名字
 	private String binaryAddress;// 二进制文件的存储位置。上传之后，将文件存储在指定的位置，然后将binary清空
-	private String imageBase64;// 图片的base64字符串
+	private String imageBase64;// 文件的base64字符串
     
 	public String getChatName() {
 		return chatName;

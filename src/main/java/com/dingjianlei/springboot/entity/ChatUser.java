@@ -25,7 +25,27 @@ public class ChatUser {
     private Integer account;
     /**手机号**/
     @Column(nullable = false)
-    private String  mobile;
+    private String  mobile;   
+    /**积分**/
+    @Column(nullable = false)
+    private String score;
+    
+    /**是否是方管**/
+    @Column(nullable = false)
+    private String  roomAdmin;  
+    
+	public String getRoomAdmin() {
+		return roomAdmin;
+	}
+	public void setRoomAdmin(String roomAdmin) {
+		this.roomAdmin = roomAdmin;
+	}
+	public String getScore() {
+		return score;
+	}
+	public void setScore(String score) {
+		this.score = score;
+	}
 	public String getId() {
 		return id;
 	}

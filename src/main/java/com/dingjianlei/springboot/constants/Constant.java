@@ -1,7 +1,7 @@
 package com.dingjianlei.springboot.constants;
 
 public class Constant {
-/*验证email是否存在 */
+/**验证email是否存在 */
 public static final String EMAIL_TYPE="0";
 /**验证用户名是否存在**/
 public static final String USER_TYPE="1";
@@ -20,5 +20,12 @@ public static final String ERROR_USERNAME_EXISIS="该用户名已经存在";
 public static final String ERROR_EXCEPTION="程序发生异常";
 /**成功应答标记**/
 public static final String SUCCESS_RESPONSE="SUCCESS";
+/**在线人数，初始化为1人**/
 public static String ONLINECOUNT="1";
+/**rank只显示前几名的人 为前端美工**/
+public static int RANK_COUNT=7;
+/**增加积分访问的controller**/
+public  static final String LOGIN_ADD_SCORE_CONTROLLER="http://localhost:2080"+"/score/addScore";
+/**登陆增加的分数**/
+public static final String LOGIN_ADD_SCORE=100+"";
 }
