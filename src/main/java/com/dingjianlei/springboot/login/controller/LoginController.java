@@ -45,7 +45,6 @@ public class LoginController {
 			try {// 登陆时增加积分 最好用消息队列 这里用httpclent模拟
 				List<Favorites> favList = fillFavoritesListByUsername(favoritesService, username);
 				modelMap.addAttribute("favoritesList", favList);
-
 				chatUserService.updateScoreByChatUserId(chatUser.getId(), Constant.LOGIN_ADD_SCORE);
 			} catch (Exception e) {
 				e.printStackTrace();

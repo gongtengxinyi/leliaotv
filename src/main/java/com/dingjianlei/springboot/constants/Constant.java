@@ -28,4 +28,8 @@ public static int RANK_COUNT=7;
 public  static final String LOGIN_ADD_SCORE_CONTROLLER="http://localhost:2080"+"/score/addScore";
 /**登陆增加的分数**/
 public static final String LOGIN_ADD_SCORE=100+"";
+/**系统推送默认主键**/
+public static final String SYSTEM_PUSH_ID="8888";
+/**系统推送默认名字**/
+public static final String SYSTEM_PUSH_NAME="老司机";
 }
