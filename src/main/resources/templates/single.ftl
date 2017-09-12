@@ -709,40 +709,31 @@
 		 function setMessageOnHtml(jsonObj) {
 			 if (typeof(jsonObj.chatName) == "undefined"){
 				jsonObj.chatName="佚名";
-				 }
-
-		    
+				 }		    
 		//如果是聊天消息
-			if (jsonObj.messageMode == 'CHAT_MESSAGE') {
+			if (jsonObj.messageMode == 'CHAT_MESSAGE'||
+		jsonObj.messageMode == 'ADMIN_MESSAGE') {
 				if (jsonObj.messageType == 'TEXT') {
 					var word = "<div  class='chat_div'><img class='chat_img'  src='/images/pic.jpg' />"
 						+ "<span class='chat_word'>"
 						+ jsonObj.chatName
 						+ "："
 						+ jsonObj.message + "</span></div>";
-				$("#chatList").append(word);
-				} else if (jsonObj.messageType == '') {
-
-				} else if (jsonObj.messageType == '') {
-
-				} else if (jsonObj.messageType == '') {
-
-				}
-			}
-			//如果是管理员系统消息
-			else if (jsonObj.messageMode == 'ADMIN_MESSAGE') {
-				if (jsonObj.messageType == 'TEXT') {
-					var word = "<div  class='chat_div'><img class='chat_img'  src='/images/pic.jpg' />"
-						+ "<span class='chat_word'>"
+				$("#chatList").append(word); 
+				} else if (jsonObj.messageType == 'IMAGE') {
+				var image = "<div  class='chat_div'><img class='chat_img'  src='/images/pic.jpg' />"			
 						+ jsonObj.chatName
 						+ "："
-						+ jsonObj.message + "</span></div>";
-				$("#chatList").append(word);
-				} else if (jsonObj.messageType == '') {
+						+ "</div>	"								
+					    + "<img  class='chat_image' src='"
+					    +jsonObj.binaryAddress
+					    +"'></img>";
+				$("#chatListForTuhao").append(image);
+				}  else if (jsonObj.messageType == 'VIDEO') {
 
-				} else if (jsonObj.messageType == '') {
+				} else if (jsonObj.messageType == 'TORRENT') {
 
-				} else if (jsonObj.messageType == '') {
+				}else if (jsonObj.messageType == 'BINARY') {
 
 				}
 			}
@@ -805,10 +796,10 @@
 				jsonObj.messageType = "IMAGE";
 			}
 
-			if (fileSuffix == 'torrent') {
+			else if (fileSuffix == 'torrent') {
 				jsonObj.messageType = "TORRENT";
 			}
-			if (fileSuffix == 'mp4' || fileSuffix == 'avi'
+			else if (fileSuffix == 'mp4' || fileSuffix == 'avi'
 					|| fileSuffix == 'mov' || fileSuffix == 'flv'
 					|| fileSuffix == 'rmvb' || fileSuffix == 'wmv'
 					|| fileSuffix == 'MP4' || fileSuffix == 'AVI'
