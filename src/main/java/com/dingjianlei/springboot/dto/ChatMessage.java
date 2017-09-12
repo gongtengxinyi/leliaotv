@@ -18,7 +18,16 @@ public class ChatMessage {
 	private String uuid;// 文件名字
 	private String binaryAddress;// 二进制文件的存储位置。上传之后，将文件存储在指定的位置，然后将binary清空
 	private String imageBase64;// 文件的base64字符串
-    
+	private String messageFrom;//消息来源  福利区还是普通聊天区
+	
+	public String getMessageFrom() {
+		return messageFrom;
+	}
+
+	public void setMessageFrom(String messageFrom) {
+		this.messageFrom = messageFrom;
+	}
+
 	public String getChatName() {
 		return chatName;
 	}

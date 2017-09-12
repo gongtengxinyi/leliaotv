@@ -14,8 +14,16 @@
 	font-size: 16px";
 }
 .chat_image{
-	width:100px;
-	 height:100px;
+	margin-left:20px;
+	margin-top:10px;
+	width:200px;
+	 height:150px;
+}
+.chat_binary{
+	margin-left:20px;
+	margin-top:10px;
+	width:80px;
+	 height:80px;
 }
 .chat_button{
 	top:44px;

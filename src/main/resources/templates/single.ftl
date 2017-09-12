@@ -39,14 +39,15 @@
     <script type="text/javascript" src="/danmu/syntaxhighlighter/scripts/shCore.js"></script>
     <script type="text/javascript" src="/danmu/syntaxhighlighter/scripts/shBrushJScript.js"></script>
     <script type="text/javascript" src="/danmu/syntaxhighlighter/scripts/shBrushPhp.js"></script>
-    <script type="text/javascript" src="/danmu/pick-a-color/js/pick-a-color-1.2.3.min.js"></script> 
+    <script type="text/javascript" src="/danmu/pick-a-color/js/pick-a-color-1.2.3.min.js"></script>   
     <link rel="stylesheet"
 	href="/video-js//video-js.css" type="text/css">
     <script src="/video-js/video.js"></script>
 <script src="/video-js/videojs-contrib-hls.min.js"></script>
 
 <style type="text/css">
-
+.div{
+}
 .chat{
 
 }
@@ -379,10 +380,9 @@
 									</div>
 					<div class="panel panel-default texttive">
 				<div class="chat_button" id="loginButtonFor">
-<a id="" class="login_button" href="#" >请登录</a>
+<a id="" class="login_button" href="/dispatcherLogin.ftl" >请登录</a>
 </div>	
-			<textarea  id="sendChatMessage"
-									onmousedown="s(event,this)"		
+			<textarea  id="sendChatMessage"		
 									style="width: 349px; height: 80px; resize: none; border: 0; overflow-y: hidden;">
 					</textarea>
 				
@@ -428,13 +428,13 @@
 
 									<div class="panel panel-default">
 
-										<textarea
+										<textarea   id="chatListFuli"
 											style="width: 349px; height: 50px; resize: none; border: 0; overflow-y: hidden;"></textarea>
 
 									</div>
 									<div>
 									<div style="float: right">
-										<button id="sendfuli" type="button" class="btn btn btn-primary btn-lg">发送</button>
+										<button onclick="createAndSendChatMessageForFuli()" id="sendfuli" type="button" class="btn btn btn-primary btn-lg">发送</button>
 									</div>
 									<div style="float: right;margin-right: 30px">
 									  <img id="addImage"
@@ -563,6 +563,10 @@
 				</div>
 			</div>
 		</div>
+		
+		<div id="outerdiv" style="position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:2;width:100%;height:100%;display:none;">
+		<div id="innerdiv" style="position:absolute;">
+		
 		<div class="bottom-footer">
 			<div class="container">
 				<div class="row">
@@ -589,6 +593,9 @@
 
 	<!-- JS -->
 	<script src="/owl-carousel/owl.carousel.js"></script>
+
+</script>
+
 	<script type="text/javascript">
 	var chatUser = $("#chatUser").val();
 	var loginButtonStatus=$("#loginButton").val();
@@ -599,7 +606,7 @@
 		$("#sendChatMessage").attr( "disabled", true).css("cursor", "default");	
 		}
 	   var player = videojs('example-video', { fluid: true }, function () {
-           this.play(); // if you don't trust autoplay for some reason  
+           this.play();  
         });
 	
 	   var websocket=null;
@@ -634,120 +641,203 @@
 				}
 				var jsonObj = JSON.parse(event.data);
 				setMessageOnHtml(jsonObj);
-				add();					
-				var item={
-						   img:'/danmu/img/heisenberg.png', //图片 
-						   info:jsonObj.message, //文字 
-						   href:'http://www.yaseng.org', //链接 
-						   close:true, //显示关闭按钮 
-						   speed:8, //延迟,单位秒,默认8 
-// 						   bottom:, //距离底部高度,单位px,默认随机 
-						   color:getReandomColor(), //颜色,默认白色 
-						   old_ie_color:'#000000', //ie低版兼容色,不能与网页背景相同,默认黑色 
-				 };
-				
-						$('#danmu').barrager(item);
+			
+		if (jsonObj.messageType == 'IMAGE'
+					|| jsonObj.messageType == 'BINARY'
+					|| jsonObj.messageType == 'TORRENT'
+					|| jsonObj.messageType == 'VIDEO') {
+				return;
 			}
-			function s(e,a)
-			{
-				 if ( e && e.preventDefault )
-			            e.preventDefault();
-				else 
-				window.event.returnValue=false;
-					a.focus();
-					
-			}
-			function add()
-			{
+
+			var item = {
+				img : '/danmu/img/heisenberg.png', //图片 
+				info : jsonObj.message, //文字 
+				href : 'http://www.yaseng.org', //链接 
+				close : true, //显示关闭按钮 
+				speed : 8, //延迟,单位秒,默认8 
+				// 						   bottom:, //距离底部高度,单位px,默认随机 
+				color : getReandomColor(), //颜色,默认白色 
+				old_ie_color : '#000000', //ie低版兼容色,不能与网页背景相同,默认黑色 
+			};
+
+			$('#danmu').barrager(item);
+		}
+	
+		function addChat() {
 			var now = new Date();
 			var div = document.getElementById('chatList');
 			div.scrollTop = div.scrollHeight;
+		}
+		function addChatTuhao() {
+			var now = new Date();
+			var div = document.getElementById('chatListForTuhao');
+			div.scrollTop = div.scrollHeight;
+		}
+		$('#sendChatMessage').keydown(function(e) {
+			if (e.keyCode == 13) {
+				createAndSendChatMessage();
 			}
-			
-			 $('#sendChatMessage').keydown(function(e){
-			   if(e.keyCode==13){
-				   createAndSendChatMessage();
-			    }
-			    });
-			// 连接关闭的回调方法
-			websocket.onclose = function() {
-				// setMessageInnerHTML("WebSocket closed");
-				alert("oncolde");
+		});
+		$('#chatListFuli').keydown(function(e) {
+			if (e.keyCode == 13) {
+				createAndSendChatMessageForFuli();
 			}
-	 //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
-	     window.onbeforeunload = function() {
+		});	
+		// 连接关闭的回调方法
+		websocket.onclose = function() {
+			// setMessageInnerHTML("WebSocket closed");
+			alert("oncolde");
+		}
+		//监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+		window.onbeforeunload = function() {
 			//连接关闭的回调方法
 			websocket.onclose = function() {
 			}
 		}
-		  function waitBinary(jsonObj){
-			  var uuid = jsonObj.uuid;
-	          	var binaryAddress	 = jsonObj.binaryAddress;
-		        $("#"+uuid).load(function(){				        	
-		        });
-		        $("#"+uuid).error(function(){	
-		        	  $("#"+uuid).attr("src","static/images/loading.gif");	
-		        	 var ime= setTimeout(function(){
-		        	  	  $("#"+uuid).attr("src",jsonObj.binaryAddress+"?"+Math.random());				        	  	  
-		        	 },3000); 
-		        });
-		  }
-	   
-		//随机获取颜色值
-		function getReandomColor(){
-		    return '#'+(function(h){
-		    return new Array(7-h.length).join("0")+h
-		    })((Math.random()*0x1000000<<0).toString(16))
+		function waitBinary(jsonObj) {
+			var uuid = jsonObj.uuid;
+			var binaryAddress = jsonObj.binaryAddress;
+			$("#" + uuid).load(function() {
+			});
+			$("#" + uuid).error(
+					function() {
+						$("#" + uuid).attr("src", "/images/loading.gif");
+						var ime = setTimeout(function() {
+							$("#" + uuid)
+									.attr(
+											"src",
+											jsonObj.binaryAddress + "?"
+													+ Math.random());
+						}, 3000);
+					});
 		}
-		function successToServer(){
-			var p="<span style='color:#00ff00'>连接弹幕成功，请开始你的表演。。。。</span><br>";
-			var p1="<span style='color:#00ff00;font-size:15px'>可以上传和下载种子，图片，小视频都行哦~</span><br><br>";
+    
+		//随机获取颜色值
+		function getReandomColor() {
+			return '#' + (function(h) {
+				return new Array(7 - h.length).join("0") + h
+			})((Math.random() * 0x1000000 << 0).toString(16))
+		}
+		function successToServer() {
+			var p = "<span style='color:#00ff00'>连接弹幕成功，请开始你的表演。。。。</span><br>";
+			var p1 = "<span style='color:#00ff00;font-size:15px'>可以上传和下载种子，图片，小视频都行哦~</span><br><br>";
 			$("#chatList").append(p);
 			$("#chatListForTuhao").append(p1);
 			return;
 		}
-		 function setMessageOnHtml(jsonObj) {
-			 if (typeof(jsonObj.chatName) == "undefined"){
-				jsonObj.chatName="佚名";
-				 }		    
-		//如果是聊天消息
-			if (jsonObj.messageMode == 'CHAT_MESSAGE'||
-		jsonObj.messageMode == 'ADMIN_MESSAGE') {
+		function setMessageOnHtml(jsonObj) {
+			if (typeof (jsonObj.chatName) == "undefined") {
+				jsonObj.chatName = "佚名";
+			}
+			//如果是聊天消息
+			if (jsonObj.messageMode == 'CHAT_MESSAGE'
+					|| jsonObj.messageMode == 'ADMIN_MESSAGE') {
 				if (jsonObj.messageType == 'TEXT') {
-					var word = "<div  class='chat_div'><img class='chat_img'  src='/images/pic.jpg' />"
-						+ "<span class='chat_word'>"
-						+ jsonObj.chatName
-						+ "："
-						+ jsonObj.message + "</span></div>";
-				$("#chatList").append(word); 
+					if(jsonObj.messageFrom == 'FULI_AREA'){
+						var word = "<div  class='chat_div'><img  class='chat_img'  src='/images/pic.jpg' />"
+							+ "<span class='chat_word'>"
+							+ jsonObj.chatName
+							+ "：" + jsonObj.message + "</span></div>";
+					$("#chatListForTuhao").append(word);
+					addChatTuhao();
+					}else{
+						var word = "<div  class='chat_div'><img  class='chat_img'  src='/images/pic.jpg' />"
+							+ "<span class='chat_word'>"
+							+ jsonObj.chatName
+							+ "：" + jsonObj.message + "</span></div>";
+					$("#chatList").append(word);
+					addChat();
+					}				
 				} else if (jsonObj.messageType == 'IMAGE') {
-				var image = "<div  class='chat_div'><img class='chat_img'  src='/images/pic.jpg' />"			
+					var image = "<div  class='chat_div'><img class='chat_img'  src='/images/pic.jpg' />"
+							+ jsonObj.chatName
+							+ "："
+							+ "</div>	"
+							+"<a target='_blank' href='"
+							+jsonObj.binaryAddress
+							+"'><img id='"
+							+jsonObj.uuid
+							+"'class='chat_image' src='"
+					        +jsonObj.binaryAddress
+					        +"'></img></a>";
+					$("#chatListForTuhao").append(image);
+					waitBinary(jsonObj);
+					addChatTuhao();
+					return;
+				} else if (jsonObj.messageType == 'VIDEO') {
+					var image = "<div  class='chat_div'><img class='chat_img'  src='/images/pic.jpg' />"
 						+ jsonObj.chatName
 						+ "："
-						+ "</div>	"								
-					    + "<img  class='chat_image' src='"
-					    +jsonObj.binaryAddress
-					    +"'></img>";
+						+ "</div>	"
+						+ "<video width='240' height='240'  controls='controls'>"
+						+" <source src="
+						+ jsonObj.binaryAddress
+						+" type='video/mp4'></video>"
 				$("#chatListForTuhao").append(image);
-				}  else if (jsonObj.messageType == 'VIDEO') {
-
+				waitBinary(jsonObj);
+				addChatTuhao();
+				return;
 				} else if (jsonObj.messageType == 'TORRENT') {
-
-				}else if (jsonObj.messageType == 'BINARY') {
-
+					var image = "<div  class='chat_div'><img class='chat_img'  src='/images/pic.jpg' />"
+						+ jsonObj.chatName
+						+ "："
+						+ "</div>	"
+						"<a target='view_window' href='"
+						+ jsonObj.binaryAddress+"'>"
+						+"<img id='"
+						+jsonObj.uuid
+						+"'class='chat_image' src='/images/torrent.jpg'></img></a>";
+				$("#chatListForTuhao").append(image);
+				waitBinary(jsonObj);
+				addChatTuhao();
+				return;
+				} else if (jsonObj.messageType == 'BINARY') {
+					var image = "<div  class='chat_div'><img class='chat_img'  src='/images/pic.jpg' />"
+						+ jsonObj.chatName
+						+ "："
+						+ "</div>	"
+						+"<a target='view_window' href='"
+						+ jsonObj.binaryAddress+"'>"
+						+"<img id='"
+						+jsonObj.uuid
+						+"'class='chat_image' src='/images/binary.png'></img></a>";
+				$("#chatListForTuhao").append(image);
+				waitBinary(jsonObj);
+				addChatTuhao();
+				return;
 				}
 			}
 			//系统广播
 			else {
 
 			}
-
 		}
 
+		//创建福利聊天消息	
+		function createAndSendChatMessageForFuli() {
+			var jsonObj = {};
+			jsonObj.uuid = UUID();
+			if (chatUser == 'YES') {
+				jsonObj.messageMode = "ADMIN_MESSAGE";
+			} else {
+				jsonObj.messageMode = "CHAT_MESSAGE";
+			}
+			jsonObj.messageFrom="FULI_AREA";
+			jsonObj.messageType = "TEXT";
+			jsonObj.message = document.getElementById('chatListFuli').value;
+			var str = jQuery.trim(jsonObj.message);//去除空格
+			if (str == "") {
+				alert("发送的字符串不能为空");
+				return;
+			}
+			websocket.send(JSON.stringify(jsonObj));
+			$("#chatListFuli").val("");
+		}
 		//创建聊天消息	
 		function createAndSendChatMessage() {
 			var jsonObj = {};
 			jsonObj.uuid = UUID();
+			jsonObj.messageFrom="ORIGNL_AREA";
 			if (chatUser == 'YES') {
 				jsonObj.messageMode = "ADMIN_MESSAGE";
 			} else {
@@ -784,6 +874,7 @@
 		function sendBinary(binary, fileSuffix) {
 			var jsonObj = {};
 			jsonObj.uuid = UUID();
+			jsonObj.messageFrom="FULI_AREA";
 			if (chatUser == 'YES') {
 				jsonObj.messageMode = "ADMIN_MESSAGE";
 			} else {
@@ -798,8 +889,7 @@
 
 			else if (fileSuffix == 'torrent') {
 				jsonObj.messageType = "TORRENT";
-			}
-			else if (fileSuffix == 'mp4' || fileSuffix == 'avi'
+			} else if (fileSuffix == 'mp4' || fileSuffix == 'avi'
 					|| fileSuffix == 'mov' || fileSuffix == 'flv'
 					|| fileSuffix == 'rmvb' || fileSuffix == 'wmv'
 					|| fileSuffix == 'MP4' || fileSuffix == 'AVI'
@@ -831,5 +921,7 @@
 			$("#img").click();
 		}
 	</script>
+      
+</script>
 </body>
 </html>

@@ -22,6 +22,16 @@ public class Room {
     /**房间 直播 类型**/
     @Column(nullable = false)
     private String liveType;
+    /**创建时间**/
+    @Column(nullable = false)
+    private String createDate;
+    
+	public String getCreateDate() {
+		return createDate;
+	}
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
+	}
 	public String getId() {
 		return id;
 	}

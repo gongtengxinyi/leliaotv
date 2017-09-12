@@ -1,6 +1,11 @@
 package com.dingjianlei.springboot.login.controller;
 
 import java.util.List;
+import java.util.UUID;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,17 +43,24 @@ public class LoginController {
 	 */
 	@SuppressWarnings("finally")
 	@RequestMapping("login")
-	public String getLogin(String username, String password, ModelMap modelMap) {
+	public String getLogin(String username, String password, ModelMap modelMap,HttpServletRequest request,HttpServletResponse response) {
 		ChatUser chatUser = chatUserService.login(username, password);
 		// 无论出错都必须跳转到首页
 		if (chatUser != null) {
 			try {// 登陆时增加积分 最好用消息队列 这里用httpclent模拟
 				List<Favorites> favList = fillFavoritesListByUsername(favoritesService, username);
+				
 				modelMap.addAttribute("favoritesList", favList);
+				
 				chatUserService.updateScoreByChatUserId(chatUser.getId(), Constant.LOGIN_ADD_SCORE);
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
+			    Cookie cookie = new Cookie(Constant.LOGIN_COOKIE,UUID.randomUUID().toString() );//创建一个cookie，cookie的名字是lastAccessTime
+			       //将cookie对象添加到response对象中，这样服务器在输出response对象中的内容时就会把cookie也输出到客户端浏览器		       
+			    modelMap.addAttribute("chatUserId", chatUser.getId());
+		        response.addCookie(cookie);
 				return "index";
 			}
 		} else {
@@ -94,7 +106,14 @@ public class LoginController {
 		chatUserService.insertChatUser(chatUser);
 		return "login";
 	}
-
+	/**
+	 * 
+	 * @param 跳转登录界面
+	 */
+	@RequestMapping("dispatcherLogin")
+	public String dispatcherLogin() {
+		return "login";
+	}
 	/**
 	 * @param userName
 	 * @param type

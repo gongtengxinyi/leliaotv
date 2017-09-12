@@ -78,7 +78,12 @@ public class ChatUserServiceImpl implements ChatUserService {
 
 	@Override
 	public boolean updateScoreByChatUserId(String chatUserId, String addScore) {
-		int res = chatUserRepository.updateScoreByChatUserId(addScore, chatUserId);
+		ChatUser chatUser = chatUserRepository.findOne(chatUserId);
+		int res=0;
+		if(chatUser!=null){
+			int count=Integer.parseInt(chatUser.getScore())+Integer.parseInt(addScore);
+			res = chatUserRepository.updateScoreByChatUserId(String.valueOf(count), chatUserId);	
+		}
 		if (res > 0) {
 			return true;
 		}
