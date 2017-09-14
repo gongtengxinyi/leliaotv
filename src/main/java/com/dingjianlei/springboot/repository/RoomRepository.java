@@ -6,4 +6,5 @@ import com.dingjianlei.springboot.entity.Room;
 
 public interface RoomRepository extends JpaRepository<Room, String> {
 	Room findById(String id);
+	Room findByRoomNum(String roomNum);
 }

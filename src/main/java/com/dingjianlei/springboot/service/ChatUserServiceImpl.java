@@ -127,9 +127,11 @@ public class ChatUserServiceImpl implements ChatUserService {
 		// TODO Auto-generated method stub
 		try {
 
-			chatUserRepository.save(chatUser);
+			ChatUser save = chatUserRepository.save(chatUser);
+			System.out.println(save);
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 			return 0;
 		}
 

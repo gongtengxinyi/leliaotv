@@ -6,7 +6,8 @@
 .chat_img{
 	width:25px;
 	 height:25px;
-	border-radius:20px";
+	border-radius:20px;
+	margin-right: 10px
 }
 .chat_word{
 	word-break: break-all; 

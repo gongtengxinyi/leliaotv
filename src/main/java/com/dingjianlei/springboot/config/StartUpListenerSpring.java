@@ -11,7 +11,7 @@ import com.dingjianlei.springboot.constants.Constant;
 import com.dingjianlei.springboot.entity.ChatUser;
 import com.dingjianlei.springboot.service.ChatUserService;
 
-/**
+/**启动加载常见的配置文件
  * @author dingjianlei
  */
 @Component

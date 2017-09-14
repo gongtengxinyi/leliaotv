@@ -160,7 +160,7 @@ public class ChatServer {
 				chatUserIdSet = new CopyOnWriteArraySet<String>();
 			}
 			chatUserIdSet.add(chatUserId);
-			roomToChatUserHashMap.put(chatUserId, chatUserIdSet);
+			roomToChatUserHashMap.put(roomId, chatUserIdSet);
 			chatUserToChatServer.put(chatUserId, this);
 			return true;
 		} catch (Exception e) {

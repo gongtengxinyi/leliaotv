@@ -110,49 +110,30 @@
 		<!--Navigation-->
 		<nav id="menu" class="navbar">
 			<div class="container">
-				<div class="navbar-header">
-					<span id="heading" class="visible-xs">分类</span>
-					<button type="button" class="btn btn-navbar navbar-toggle"
-						data-toggle="collapse" data-target=".navbar-ex1-collapse">
-						<i class="fa fa-bars"></i>
-					</button>
-				</div>
+	
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
 					<ul class="nav navbar-nav">
-						<li><a href="index.html"><i class="fa fa-home"></i> 主页</a></li>
+						<li><a href="/index/gotoIndex"><i class="fa fa-home"></i> 主页</a></li>
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
 							data-toggle="dropdown"><i class="fa fa-user"></i> 账号</a>
 							<div class="dropdown-menu">
 								<div class="dropdown-inner">
 									<ul class="list-unstyled">
-										<li><a href="archive.html">登录</a></li>
-										<li><a href="archive.html">注册</a></li>
+										<li><a href="/dispatcherLogin">登录</a></li>
 									</ul>
 								</div>
 							</div></li>
+					
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown"><i class="fa fa-play-circle-o"></i> 视频</a>
-							<div class="dropdown-menu">
-								<div class="dropdown-inner">
-									<ul class="list-unstyled">
-										<li><a href="archive.html">Text 201</a></li>
-										<li><a href="archive.html">Text 202</a></li>
-										<li><a href="archive.html">Text 203</a></li>
-										<li><a href="archive.html">Text 204</a></li>
-										<li><a href="archive.html">Text 205</a></li>
-									</ul>
-								</div>
-							</div></li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown"><i class="fa fa-list"></i> 分类</a>
+							data-toggle="dropdown"><i class="fa fa-list"></i> 友链</a>
 							<div class="dropdown-menu" style="margin-left: -203.625px;">
 								<div class="dropdown-inner">
 									<ul class="list-unstyled">
-										<li><a href="archive.html">Text 301</a></li>
-										<li><a href="archive.html">Text 302</a></li>
-										<li><a href="archive.html">Text 303</a></li>
-										<li><a href="archive.html">Text 304</a></li>
-										<li><a href="archive.html">Text 305</a></li>
+										<li><a href="archive.html">好友1</a></li>
+										<li><a href="archive.html">好友1</a></li>
+										<li><a href="archive.html">好友1</a></li>
+										<li><a href="archive.html">好友1</a></li>
+										<li><a href="archive.html">好友1</a></li>
 									</ul>
 									<ul class="list-unstyled">
 										<li><a href="archive.html">Text 306</a></li>
@@ -170,15 +151,65 @@
 									</ul>
 								</div>
 							</div></li>
-						<li><a href="archive.html"><i class="fa fa-cubes"></i> 黑涩</a></li>
-						<li><a href="contact.html"><i class="fa fa-envelope"></i>
-								联系</a></li>
+					<li>
+		<a id="modal-482296" href="#dashang" role="button" class="btn" data-toggle="modal"><i class="fa fa-cubes"></i>
+		打赏</a>				
+					</li>		
+							<li>
+		<a id="modal-482292" href="#contact" role="button" class="btn" data-toggle="modal"><i class="fa fa-cubes"></i>
+		 联系作者</a>				
+					</li>
 					</ul>
 				</div>
 			</div>
 		</nav>
 	</header>
 	<!-- Header -->
+
+			
+	<div class="modal fade" id="dashang" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<h4 class="modal-title" id="myModalLabel">
+								友情提示
+							</h4>
+						</div>
+						<div class="modal-body">
+						<img src="/images/b.png"  style="height: 300px;width: 300px" class="img-rounded">
+                     	<img src="/images/c.png"  style="height: 300px;width: 300px" class="img-rounded">
+						</div>
+						<div class="modal-footer">
+							 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button> <button type="button" class="btn btn-primary">保存</button>
+						</div>
+					</div>
+					
+				</div>
+				
+			</div>
+	<div class="modal fade" id="contact" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<h4 class="modal-title" id="myModalLabel">
+								友情提示
+							</h4>
+						</div>
+						<div class="modal-body">
+						<p> qq:1251272104</p>
+						<img src="/images/a.png"  style="height: 300px;width: 300px" class="img-rounded">
+						</div>
+						<div class="modal-footer">
+							 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button> <button type="button" class="btn btn-primary">保存</button>
+						</div>
+					</div>
+					
+				</div>
+				
+			</div>
+			
 
 	<!-- /////////////////////////////////////////Content -->
 	<div id="page-content" class="single-page">
@@ -194,164 +225,8 @@
 </video>
 </div>	
 
-<br>
-					<div class="share">
-						<ul class="list-inline center">
-							<li><a href="#" class="btn btn-facebook"><i
-									class="fa fa-facebook"></i> Share</a></li>
-							<li><a href="#" class="btn btn-twitter"><i
-									class="fa fa-twitter"></i> Tweet</a></li>
-							<li><a href="#" class="btn btn-pinterest"><i
-									class="fa fa-pinterest"></i> Tweet</a></li>
-							<li><a href="#" class="btn btn-google"><i
-									class="fa fa-google-plus-square"></i> Google+</a></li>
-							<li><a href="#" class="btn btn-mail"><i
-									class="fa fa-envelope-o"></i> E-mail</a></li>
-						</ul>
-					</div>
-					<div class="line"></div>
-					<h1 class="vid-name">
-						<a href="#">Video's Name</a>
-					</h1>
-					<div class="info">
-						<h5>
-							By <a href="#">Kelvin</a>
-						</h5>
-						<span><i class="fa fa-calendar"></i>25/3/2015</span> <span><i
-							class="fa fa-heart"></i>1,200</span>
-					</div>
-					<p style="margin-top: 20px">Aenean feugiat in ante et blandit.
-						Vestibulum posuere molestie risus, ac interdum magna porta non.
-						Pellentesque rutrum fringilla elementum. Curabitur tincidunt porta
-						lorem vitae accumsan. Pellentesque habitant morbi tristique
-						senectus et netus et malesuada fames ac turpis egestas. Donec ac
-						euismod turpis.Aenean feugiat in ante et blandit. Vestibulum
-						posuere molestie risus, ac interdum magna porta non. Pellentesque
-						rutrum fringilla elementum. Curabitur tincidunt porta lorem vitae
-						accumsan. Pellentesque habitant morbi tristique senectus et netus
-						et malesuada fames ac turpis egestas. Donec ac euismod turpis.</p>
-					<h4>Heading</h4>
-					<p style="margin-top: 20px">Aenean feugiat in ante et blandit.
-						Vestibulum posuere molestie risus, ac interdum magna porta non.
-						Pellentesque rutrum fringilla elementum. Curabitur tincidunt porta
-						lorem vitae accumsan. Pellentesque habitant morbi tristique
-						senectus et netus et malesuada fames ac turpis egestas. Donec ac
-						euismod turpis.</p>
-					<div class="vid-tags">
-						<a href="#">Animal</a> <a href="#">Aenean</a> <a href="#">Feugiat</a>
-						<a href="#">Risus</a> <a href="#">Magna</a>
-					</div>
-					<div class="line"></div>
-					<div class="comment">
-						<h3>Leave A Comment</h3>
-						<form name="form1" method="post" action="">
-							<div class="row">
-								<div class="col-md-6">
-									<div class="form-group">
-										<input type="text" class="form-control input-lg" name="name"
-											id="name" placeholder="Enter name" required="required" />
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<input type="email" class="form-control input-lg" name="email"
-											id="email" placeholder="Enter email" required="required" />
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-12">
-									<div class="form-group">
-										<textarea name="messagesend" id="messagesendd" class="form-control"
-											rows="4" cols="25" required="required" placeholder="Message"></textarea>
-									</div>
-									<button type="submit" class="btn btn-4 btn-block"
-										name="btnSend" id="btnSend">Send</button>
-								</div>
-							</div>
-						</form>
-					</div>
-					<div class="line"></div>
-					<div class="box">
-						<div class="box-header">
-							<h2>
-								<i class="fa fa-globe"></i> RELATED VIDEOS
-							</h2>
-						</div>
-						<div class="box-content">
-							<div class="row">
-								<div class="col-md-4">
-									<div class="wrap-vid">
-										<div class="zoom-container">
-											<div class="zoom-caption">
-												<span>Video's Tag</span> <a href="single.html"> <i
-													class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-												</a>
-												<p>Video's Name</p>
-											</div>
-											<img src="images/7.jpg" />
-										</div>
-										<h3 class="vid-name">
-											<a href="#">Video's Name</a>
-										</h3>
-										<div class="info">
-											<h5>
-												By <a href="#">Kelvin</a>
-											</h5>
-											<span><i class="fa fa-calendar"></i>25/3/2015</span> <span><i
-												class="fa fa-heart"></i>1,200</span>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="wrap-vid">
-										<div class="zoom-container">
-											<div class="zoom-caption">
-												<span>Video's Tag</span> <a href="single.html"> <i
-													class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-												</a>
-												<p>Video's Name</p>
-											</div>
-											<img src="images/8.jpg" />
-										</div>
-										<h3 class="vid-name">
-											<a href="#">Video's Name</a>
-										</h3>
-										<div class="info">
-											<h5>
-												By <a href="#">Kelvin</a>
-											</h5>
-											<span><i class="fa fa-calendar"></i>25/3/2015</span> <span><i
-												class="fa fa-heart"></i>1,200</span>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="wrap-vid">
-										<div class="zoom-container">
-											<div class="zoom-caption">
-												<span>Video's Tag</span> <a href="single.html"> <i
-													class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-												</a>
-												<p>Video's Name</p>
-											</div>
-											<img src="images/9.jpg" />
-										</div>
-										<h3 class="vid-name">
-											<a href="#">Video's Name</a>
-										</h3>
-										<div class="info">
-											<h5>
-												By <a href="#">Kelvin</a>
-											</h5>
-											<span><i class="fa fa-calendar"></i>25/3/2015</span> <span><i
-												class="fa fa-heart"></i>1,200</span>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+					<div class="line"></div>			
+					<p style="margin-top: 20px">${room.roomIntroduce }</p>							
 				</div>			
 				<div id="" class="col-lg-4">
 					<!---- Start Widget ---->
@@ -380,19 +255,16 @@
 									</div>
 					<div class="panel panel-default texttive">
 				<div class="chat_button" id="loginButtonFor">
-<a id="" class="login_button" href="/dispatcherLogin.ftl" >请登录</a>
+<a id="" class="login_button" href="/singleLogin?roomId=${room.id }" >请登录</a>
 </div>	
 			<textarea  id="sendChatMessage"		
 									style="width: 349px; height: 80px; resize: none; border: 0; overflow-y: hidden;">
 					</textarea>
-				
-					<div align="right">
-	<button id="send" type="button" class="btn btn btn-primary btn-lg" onclick="createAndSendChatMessage()">发送</button>
-</div>
-
-									</div>													
+			
+									</div>		
+													
 								</div>
-
+	
 								<div class="tab-pane fade" id="rank">
 								
 									<section id="ranking" style="margin-top: 20px">								
@@ -429,12 +301,12 @@
 									<div class="panel panel-default">
 
 										<textarea   id="chatListFuli"
-											style="width: 349px; height: 50px; resize: none; border: 0; overflow-y: hidden;"></textarea>
+											style="width: 349px; height: 70px; resize: none; border: 0; overflow-y: hidden;"></textarea>
 
 									</div>
 									<div>
-									<div style="float: right">
-										<button onclick="createAndSendChatMessageForFuli()" id="sendfuli" type="button" class="btn btn btn-primary btn-lg">发送</button>
+									<div style="float: right;margin-right: 20px">
+	<span>按回车发送</span>
 									</div>
 									<div style="float: right;margin-right: 30px">
 									  <img id="addImage"
@@ -460,130 +332,14 @@
 	</div>
 </div>
 	<footer>
-		<div class="top-footer">
-			<ul class="footer-social list-inline">
-				<li><a href="#"><i class="fa fa-twitter"></i> <span>Twitter</span></a></li>
-				<li><a href="#"><i class="fa fa-facebook"></i> <span>Facebook</span></a></li>
-				<li><a href="#"><i class="fa fa-google-plus"></i> <span>Google+</span></a></li>
-				<li><a href="#"><i class="fa fa-youtube"></i> <span>Video'sTag</span></a></li>
-				<li><a href="#"><i class="fa fa-vimeo-square"></i> <span>Vimeo</span></a></li>
-				<li><a href="#"><i class="fa fa-pinterest"></i> <span>Pinterest</span></a></li>
-				<li><a href="#"><i class="fa fa-rss"></i> <span>Rss</span></a></li>
-			</ul>
-		</div>
-		<div class="wrap-footer">
-			<div class="container">
-				<div class="row">
-					<aside class="col-footer col-md-3">
-						<h2 class="footer-title">About Us</h2>
-						<div class="textwidget">
-							Aenean feugiat in ante et blandit. Vestibulum posuere molestie
-							risus, ac interdum magna porta non. Pellentesque rutrum fringilla
-							elementum. Curabitur tincidunt porta lorem vitae accumsan. <br>
-							<br> Aenean feugiat in ante et blandit. Vestibulum posuere
-							molestie risus, ac interdum magna porta non. Pellentesque rutrum
-							fringilla elementum. Curabitur tincidunt porta lorem vitae
-							accumsan.
-						</div>
-					</aside>
-					<aside class="col-footer col-md-3 widget_recent_entries">
-						<h2 class="footer-title">Recent Posts</h2>
-						<ul>
-							<li><a href="#">MOST VISITED COUNTRIES</a></li>
-							<li><a href="#">5 PLACES THAT MAKE A GREAT HOLIDAY</a></li>
-							<li><a href="#">PEBBLE TIME STEEL IS ON TRACK TO SHIP IN
-									JULY</a></li>
-							<li><a href="#">STARTUP COMPANY&#8217;S CO-FOUNDER TALKS
-									ON HIS NEW PRODUCT</a></li>
-						</ul>
-					</aside>
-					<aside class="col-footer col-md-3">
-						<h2 class="footer-title">NEWS LETTER</h2>
-						If you want to receive our latest news send directly to your
-						email, please leave your email address bellow. Subscription is
-						free and you can cancel anytime.
-						<form action="#" method="post">
-							<input type="text" name="your-name" value="" size="40"
-								placeholder="Your Email" /> <input type="submit"
-								value="SUBSCRIBE" class="btn btn-3" />
-						</form>
-					</aside>
-					<aside class="col-footer col-md-3 wptt_TwitterTweets">
-						<h2 class="footer-title">Twitter</h2>
-						<ul class="fetched_tweets light">
-							<li class="tweets_avatar">
-								<div class="tweet_wrap">
-									<div class="wdtf-user-card ltr">
-										<div class="clear"></div>
-									</div>
-									<div class="tweet_data">
-										Check out 'NewsTube - Magazine Blog &amp; Video' on <a
-											href="#" target="_blank" rel="nofollow">#EnvatoMarket</a> <a
-											href="#" target="_blank" rel="nofollow">#themeforest</a> <a
-											href="http://t.co/jQV1MrQQKY" target="_blank" rel="nofollow">http://t.co/jQV1MrQQKY</a>
-									</div>
-									<br />
-									<div class="clear"></div>
-									<div class="times">
-										<em> <a href="#" target="_blank"
-											title="Follow cactusthemes on Twitter [Opens new window]">
-												2 months ago </a>
-										</em>
-									</div>
-									<div class="clear"></div>
-								</div>
-								<div class="clear"></div>
-							</li>
-							<li class="tweets_avatar">
-								<div class="tweet_wrap">
-									<div class="wdtf-user-card ltr">
-										<div class="clear"></div>
-									</div>
-									<div class="tweet_data">
-										Our latest theme 'Nano - Simple Magazine WordPress Theme' on <a
-											href="#" target="_blank" rel="nofollow">#EnvatoMarket</a> <a
-											href="http://twitter.com/search?q=%23themeforest"
-											target="_blank" rel="nofollow">#themeforest</a> <a
-											href="http://t.co/IfZTbJTk06" target="_blank" rel="nofollow">http://t.co/IfZTbJTk06</a>
-									</div>
-									<br />
-									<div class="clear"></div>
-									<div class="times">
-										<em> <a href="#" target="_blank"
-											title="Follow cactusthemes on Twitter [Opens new window]">
-												5 months ago </a>
-										</em>
-									</div>
-									<div class="clear"></div>
-								</div>
-								<div class="clear"></div>
-							</li>
-						</ul>
-					</aside>
-				</div>
-			</div>
-		</div>
-		
-		<div id="outerdiv" style="position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:2;width:100%;height:100%;display:none;">
-		<div id="innerdiv" style="position:absolute;">
 		
 		<div class="bottom-footer">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-6 col-sm-6 copyright">
-						<span>Copyright &copy; 2015.Company name All rights
-							reserved.<a target="_blank" href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a>
+						<span >Copyright &copy; 2017.Company name All rights
+							reserved.dingjianlei</a>
 						</span>
-					</div>
-					<div class="col-md-6 col-sm-6 link">
-						<div class="menu-footer-menu-container">
-							<ul id="menu-footer-menu" class="menu list-inline">
-								<li><a href="#"><i class="fa fa-home"></i> Home</a></li>
-								<li><a href="#"><i class="fa fa-comments"></i> Contact</a></li>
-								<li><a href="#"><i class="fa fa-question-circle"></i>
-										FAQ</a></li>
-							</ul>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -604,6 +360,8 @@
 		$("#loginButtonFor").show();
 		$("#send").hide();	
 		$("#sendChatMessage").attr( "disabled", true).css("cursor", "default");	
+		}else{
+			$("#chatUserIdHidden").val(loginButtonStatus);
 		}
 	   var player = videojs('example-video', { fluid: true }, function () {
            this.play();  
@@ -642,7 +400,7 @@
 				var jsonObj = JSON.parse(event.data);
 				setMessageOnHtml(jsonObj);
 			
-		if (jsonObj.messageType == 'IMAGE'
+	             	if (jsonObj.messageType == 'IMAGE'
 					|| jsonObj.messageType == 'BINARY'
 					|| jsonObj.messageType == 'TORRENT'
 					|| jsonObj.messageType == 'VIDEO') {
@@ -672,6 +430,7 @@
 			var now = new Date();
 			var div = document.getElementById('chatListForTuhao');
 			div.scrollTop = div.scrollHeight;
+			$("#chatListForTuhao").focus();
 		}
 		$('#sendChatMessage').keydown(function(e) {
 			if (e.keyCode == 13) {
@@ -686,7 +445,7 @@
 		// 连接关闭的回调方法
 		websocket.onclose = function() {
 			// setMessageInnerHTML("WebSocket closed");
-			alert("oncolde");
+			alert("弹幕断开");
 		}
 		//监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
 		window.onbeforeunload = function() {
@@ -832,6 +591,7 @@
 			}
 			websocket.send(JSON.stringify(jsonObj));
 			$("#chatListFuli").val("");
+			$("#chatListFuli").focus();
 		}
 		//创建聊天消息	
 		function createAndSendChatMessage() {
@@ -853,6 +613,7 @@
 			}
 			websocket.send(JSON.stringify(jsonObj));
 			$("#sendChatMessage").val("");
+			$("#sendChatMessage").focus();
 		}
 		//发送图片或者文件
 		function preView() {

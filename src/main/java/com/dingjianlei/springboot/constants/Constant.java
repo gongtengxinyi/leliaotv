@@ -34,4 +34,6 @@ public static final String LOGIN_COOKIE="LELIAO_COOKIE_LOGIN";
 public static final String SYSTEM_PUSH_ID="8888";
 /**系统推送默认名字**/
 public static final String SYSTEM_PUSH_NAME="老司机";
+/**首页显示的直播间数量**/
+public static final String INDEX_ROOM_COUNT="4";
 }

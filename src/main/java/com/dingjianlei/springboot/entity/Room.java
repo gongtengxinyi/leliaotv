@@ -2,30 +2,58 @@ package com.dingjianlei.springboot.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
+import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 @Entity
 public class Room {
-	@Id
+    // PK ID
+    @Id
+    @JsonProperty
+    @GenericGenerator(name = "systemUUID", strategy = "uuid")
+    @GeneratedValue(generator = "systemUUID")
+    @Column(name = "id", nullable = false, length = 32)
     private String id;
     @Column(nullable = false)
     /**房间名字**/
     private String roomName;
     /**直播者id**/
-    @Column(nullable = false)
+    @Column(nullable = true,length=35)
     private String liverId;
     /**房间号   **/
-    @Column(nullable = false)
+    @Column(nullable = true,length=35)
     private String roomNum;
     /**是否开放  **/
-    @Column(nullable = false)
+    @Column(nullable = true,length=35)
     private boolean status;
     /**房间 直播 类型**/
-    @Column(nullable = false)
+    @Column(nullable = true,length=35)
     private String liveType;
     /**创建时间**/
-    @Column(nullable = false)
+    @Column(nullable = true,length=35)
     private String createDate;
+    @Column(nullable = true,length=255)
+    /**房间简介**/
+    private String roomIntroduce;
+    @Column(nullable = true,length=100)
+    /**房间图片**/
+    private String roomImg;
     
+	public String getRoomImg() {
+		return roomImg;
+	}
+	public void setRoomImg(String roomImg) {
+		this.roomImg = roomImg;
+	}
+	public String getRoomIntroduce() {
+		return roomIntroduce;
+	}
+	public void setRoomIntroduce(String roomIntroduce) {
+		this.roomIntroduce = roomIntroduce;
+	}
 	public String getCreateDate() {
 		return createDate;
 	}

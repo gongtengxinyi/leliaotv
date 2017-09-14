@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="/font-awesome-4.4.0/css/font-awesome.min.css"  type="text/css">
 	
 	<!-- jQuery -->
-	<script src="js/jquery-2.1.1.js"></script>
+	<script src="/js/jquery.min.js"></script>
 	
 	<!-- Core JavaScript Files -->  	 
     <script src="/js/bootstrap.min.js"></script>
@@ -34,6 +34,12 @@
         <script src="js/html5shiv.js"></script>
         <script src="js/respond.min.js"></script>
     <![endif]-->
+    <style type="text/css">
+    .index_img{
+    width: 200px;
+    height: 150px;
+    }
+    </style>
 </head>
 
 <body>
@@ -46,18 +52,108 @@
 			</div>
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="index.html"><i class="fa fa-home"></i> 开启直播</a></li>
-		<li class="dropdown"><a href="https://github.com/gongtengxinyi" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>github 账号</a>				
+					<li><a href="/liver/gotoliveRegister"><i class="fa fa-home"></i> 开启直播</a></li>
+		<li class="dropdown">
+		<a href="https://github.com/gongtengxinyi"  target="_blank">
+		<i class="fa fa-user">
+		</i>github 账号
+		</a>				
 					</li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-play-circle-o"></i> 视频</a>				
+					
+					
+					<li class="dropdown">
+		<a href="/dispatcherLogin" >
+		<i class="fa fa-user">
+		</i>登录
+		</a>				
 					</li>
-					<li><a href="archive.html"><i class="fa fa-cubes"></i> 作者简介</a></li>
-					<li><a href="contact.html"><i class="fa fa-cubes"></i> 联系我们</a></li>
+					
+					<li>
+		<a id="modal-482295" href="#modal-container-482295" role="button" class="btn" data-toggle="modal"><i class="fa fa-play-circle-o"></i>
+		 视频</a>				
+					</li>
+						<li>
+		<a id="modal-482292" href="#contact" role="button" class="btn" data-toggle="modal"><i class="fa fa-cubes"></i>
+		 联系作者</a>				
+					</li>
+						<li>
+		<a id="modal-482296" href="#dashang" role="button" class="btn" data-toggle="modal"><i class="fa fa-cubes"></i>
+		打赏</a>				
+					</li>				
 				</ul>
 			</div>
 		</div>
 	</nav>	
 </header>
+			
+			
+	<div class="modal fade" id="dashang" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<h4 class="modal-title" id="myModalLabel">
+								友情提示
+							</h4>
+						</div>
+						<div class="modal-body">
+						<img src="/images/b.png"  style="height: 300px;width: 300px" class="img-rounded">
+                     	<img src="/images/c.png"  style="height: 300px;width: 300px" class="img-rounded">
+						</div>
+						<div class="modal-footer">
+							 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button> <button type="button" class="btn btn-primary">保存</button>
+						</div>
+					</div>
+					
+				</div>
+				
+			</div>
+			
+			
+			<div class="modal fade" id="contact" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<h4 class="modal-title" id="myModalLabel">
+								友情提示
+							</h4>
+						</div>
+						<div class="modal-body">
+						<p> qq:1251272104</p>
+						<img src="/images/a.png"  style="height: 300px;width: 300px" class="img-rounded">
+						</div>
+						<div class="modal-footer">
+							 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button> <button type="button" class="btn btn-primary">保存</button>
+						</div>
+					</div>
+					
+				</div>
+				
+			</div>
+			
+			
+			
+			<div class="modal fade" id="modal-container-482295" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<h4 class="modal-title" id="myModalLabel">
+								友情提示
+							</h4>
+						</div>
+						<div class="modal-body">
+						爬虫正在编写，近期开放，请稍等~
+						</div>
+						<div class="modal-footer">
+							 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button> <button type="button" class="btn btn-primary">保存</button>
+						</div>
+					</div>
+					
+				</div>
+				
+			</div>
 	<div id="page-content" class="index-page">
 	
 		<div class="container">
@@ -68,59 +164,47 @@
 							<div class="zoom-container">
 								<div class="zoom-caption">
 									<span>视频标签</span>
-									<a href="/room/enter/${chatUserId}/1">
+									<a href="/room/enter/1?chatUserId=${chatUserId }">
 										<i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
 									</a>
-									<p>视频名字</p>
+									<p>作者直播间</p>
 								</div>
-								<img src="images/1.jpg" />
+								<img src="/images/1.jpg" />
 							</div>
 						</div>
 					</div>
 					<div class="sub-vid">
 						<div class="col-md-3">
-							<div class="zoom-container">
+						
+						<#list roomListTop as roomTop>
+						<div class="zoom-container">
 								<div class="zoom-caption">
-									<span>Video's Tag</span>
-									<a href="single.html">
+									<span>${roomTop.liveType }</span>
+									<a href="/room/enter/${roomNum}?chatUserId=${chatUserId }">
 										<i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
 									</a>
-									<p>Video's Name</p>
+									<p>${roomTop.roomName }</p>
 								</div>
-								<img src="images/2.jpg" />
+								<img  style="width: 200px;height: 150px"  src="${roomTop.roomImg }" />
 							</div>
-							<div class="zoom-container">
-								<div class="zoom-caption">
-									<span>Video's Tag</span>
-									<a href="single.html">
-										<i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-									</a>
-									<p>Video's Name</p>
-								</div>
-								<img src="images/3.jpg" />
-							</div>
+						</#list>
+						
+							
+						
 						</div>
 						<div class="col-md-3">
+						<#list roomListBottom as roomBottom>
 							<div class="zoom-container">
 								<div class="zoom-caption">
-									<span>Video's Tag</span>
-									<a href="single.html">
+									<span>${roomBottom.liveType }</span>
+								<a href="/room/enter/${roomNum}?chatUserId=${chatUserId }">
 										<i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
 									</a>
-									<p>Video's Name</p>
+									<p>${roomBottom.roomName }</p>
 								</div>
-								<img src="images/4.jpg" />
+								<img style="width: 200px;height: 150px" src="${roomBottom.roomImg }" />
 							</div>
-							<div class="zoom-container">
-								<div class="zoom-caption">
-									<span>Video's Tag</span>
-									<a href="single.html">
-										<i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-									</a>
-									<p>Video's Name</p>
-								</div>
-								<img src="images/6.jpg" />
-							</div>
+							</#list>
 						</div>
 					</div>
 					<div class="clear"></div>
@@ -139,16 +223,16 @@
 										<div class="zoom-container">
 											<div class="zoom-caption">
 												<span>视频标签</span>
-												<a href="single.html">
+												<a href="www.youku.com" >
 													<i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
 												</a>
 												<p>视频名字</p>
 											</div>
-											<img src="images/7.jpg" />
+											<img src="/images/7.jpg" />
 										</div>
 										<h3 class="vid-name"><a href="#">视频名字</a></h3>
 										<div class="info">
-											<h5>By <a href="#">dingjianlei</a></h5>
+											<h5>By <a href="/room/enter/1?chatUserId=${chatUserId }"></h5>
 											<span><i class="fa fa-calendar"></i>25/3/2017</span> 
 											<span><i class="fa fa-heart"></i>1,200</span>
 										</div>
@@ -168,11 +252,11 @@
 												</a>
 												<p>视频名字</p>
 											</div>
-											<img src="images/9.jpg" />
+											<img src="/images/9.jpg" />
 										</div>
 										<h3 class="vid-name"><a href="#">视频名字</a></h3>
 										<div class="info">
-											<h5>By <a href="#">dingjianlei</a></h5>
+											<h5>By <a href="/room/enter/1?chatUserId=${chatUserId }"></h5>
 											<span><i class="fa fa-calendar"></i>25/3/2017</span> 
 											<span><i class="fa fa-heart"></i>1,200</span>
 										</div>
@@ -196,7 +280,7 @@
 			
 						<div class="content">
 
-							<img src="images/banner.jpg" />
+							<img src="/images/banner.jpg" />
 						</div>
 						<div class="line"></div>
 					</div>

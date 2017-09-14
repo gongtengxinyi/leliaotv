@@ -2,36 +2,45 @@ package com.dingjianlei.springboot.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
+import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 public class ChatUser {
-	@Id
+	   @Id
+	    @JsonProperty
+	    @GenericGenerator(name = "systemUUID", strategy = "uuid")
+	    @GeneratedValue(generator = "systemUUID")
+	    @Column(name = "id", nullable = false, length = 32)
     private String id;
 	/**姓名**/
-    @Column(nullable = false)
+    @Column(nullable = false,length=60)
     private String username;
     /**密码**/
-    @Column(nullable = false)
+    @Column(nullable = true,length=35)
     private String password;
    /**邮箱设置**/
-    @Column(nullable = false)
+    @Column(nullable = true,length=35)
     private String email;
     /**是否开启禁言**/
-    @Column(nullable = false)
+    @Column(nullable = true,length=35)
     private boolean speak;
     /**账户**/
-    @Column(nullable = false)
+    @Column(nullable =true)
     private Integer account;
     /**手机号**/
-    @Column(nullable = false)
+    @Column(nullable = true,length=35)
     private String  mobile;   
     /**积分**/
-    @Column(nullable = false)
+    @Column(nullable = true,length=35)
     private String score;
     
     /**是否是方管**/
-    @Column(nullable = false)
+    @Column(nullable = true,length=35)
     private String  roomAdmin;  
     
 	public String getRoomAdmin() {

@@ -49,6 +49,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<link href="css/popup-box.css" rel="stylesheet" type="text/css" media="all">
 			<script src="js/jquery.magnific-popup.js" type="text/javascript"></script>
 			<!--pop-up-box-->
+			<h1>登录</h1>
 			<form action="/login">
 				<input name="username" type="text" class="text" value="" placeholder="用户名" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '用户名';}" >
 				<input name="password"  type="password" value="" placeholder="密码" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '密码';}">
@@ -56,7 +57,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<div class="clear"></div>				
 				<div class="new">
 					<p><a href="#">忘记密码 ?</a></p>
-					<p class="sign">没有账号？  <a href="register.ftl"> 注册</a></p>
+					<p class="sign">没有账号？  <a href="/dispatcherRegister"> 注册</a></p>
 					<div class="clear"></div>
 				</div>
 			</form>

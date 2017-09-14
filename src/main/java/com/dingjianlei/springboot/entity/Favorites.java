@@ -4,22 +4,31 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
+import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 @Entity
 public class Favorites {
-	@Id
+	   @Id
+	    @JsonProperty
+	    @GenericGenerator(name = "systemUUID", strategy = "uuid")
+	    @GeneratedValue(generator = "systemUUID")
+	    @Column(name = "id", nullable = false, length = 32)
     private String id;
 	/**喜爱的**/
-    @Column(nullable = false)
+    @Column(nullable = true,length=35)
     private String liver;
     /**创建日期**/
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Date createDate;
     /**chatUser的id **/
-    @Column(nullable = false)
+    @Column(nullable = true,length=35)
     private String chatUserId;
     /**chatUser的名字**/
-    @Column(nullable = false)
+    @Column(nullable = true,length=50)
     private String username;
     
 	public String getUsername() {
