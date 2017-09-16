@@ -17,7 +17,22 @@ http://www.ckplayer.com/  有需要的小伙伴可以去官网看看api，
 
 推流直播软件推荐使用obs,obs的使用有时间写个文档，上传上来.
 
+
+
+****************效果****************
+
+![image](https://github.com/gongtengxinyi/leliaotv/blob/master/src/test/java/com/example/demo/小时.png)
+
+
+
+![image](https://github.com/gongtengxinyi/leliaotv/blob/master/src/test/java/com/example/demo/弹幕实现1.png)
+
+
+
+
 ****************获取****************
+
+
 
 数据库脚本以及环境部署，开发环境配置请凭微信转账截图加qq1251272104 获取，意思一下即可，手敲代码不易，
 
