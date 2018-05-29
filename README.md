@@ -45,9 +45,7 @@ http://www.ckplayer.com/  有需要的小伙伴可以去官网看看api，
 加好友还有各种源码哦~  欢迎砸单
 
 手机号同是
-****************喜欢给个星 给点赞助 感谢对我的大力支持*****************
-
-如果喜欢该源码，请随意打赏 谢谢 
+****************喜欢给个星 感谢对我的大力支持*****************
 
 ![image](https://github.com/gongtengxinyi/leliaotv/blob/master/src/test/java/com/example/demo/a.png)
 ![image](https://github.com/gongtengxinyi/leliaotv/blob/master/src/test/java/com/example/demo/b.png)
@@ -55,5 +53,4 @@ http://www.ckplayer.com/  有需要的小伙伴可以去官网看看api，
 
 
 
-感谢以下网友的打赏：
 
