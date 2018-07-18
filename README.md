@@ -30,26 +30,8 @@ http://www.ckplayer.com/  有需要的小伙伴可以去官网看看api，
 
 
 
-****************获取****************
-
-
-
-数据库脚本以及环境部署，开发环境配置请凭微信转账截图加qq1251272104 获取，意思一下即可，手敲代码不易，
-
-多谢配合
-
-****************商务合作****************
-
-承接各种私活 电商 企业开发等，欢迎商业合作qq1251272104 微信kenan13687672481 
-
-加好友还有各种源码哦~  欢迎砸单
-
-手机号同是
 ****************喜欢给个星 感谢对我的大力支持*****************
 
-![image](https://github.com/gongtengxinyi/leliaotv/blob/master/src/test/java/com/example/demo/a.png)
-![image](https://github.com/gongtengxinyi/leliaotv/blob/master/src/test/java/com/example/demo/b.png)
-![image](https://github.com/gongtengxinyi/leliaotv/blob/master/src/test/java/com/example/demo/c.png)
 
 
 
